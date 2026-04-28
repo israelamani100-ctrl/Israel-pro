@@ -2008,8 +2008,46 @@
                 }
 
                 .photo-wrap {
-                    display: none;
+                    display: block;
+                 margin: 2rem auto 0;
+                 text-align: center;
                 }
+              }
+
+             @media (max-width: 768 px ) { 
+                . photo-frame { 
+                      width: 200 px ; 
+                      height: 250 px ; 
+                      margin: auto ; 
+                 } 
+              }
+
+              @media (max-width: 768 px ) { 
+                  . nav-ctrl { 
+                        gap: 4 px ; 
+                   } 
+
+                . theme-btn { 
+                   width: 32 px ; 
+                   height: 32 px ; 
+                   font-size: 0.8 rem ; 
+                } 
+              }
+
+              @media ( max-width: 768px ) { 
+                 .hero {        
+                    padding: 80px 5 % 40px ;  
+                   }
+                 .hero - btns {   
+                    flex-direction: column ;       
+                    align-items: flex-start ;    
+                  } 
+                .btn {     
+                 width: 100 % ; 
+                 justify-content : center ;   
+                } 
+              }
+         
 
                 .about-grid {
                     grid-template-columns: 1fr;
@@ -2075,7 +2113,7 @@
     </head>
 
     <body>
-        HTMLEOF
+        
 
         <div class="bg-grid"></div>
         <div class="bg-grad"></div>
@@ -2647,9 +2685,9 @@
                     </div>
                     <div class="socials">
                         <a class="soc-b" href="mailto:amanikoffiisrael26@gmail.com?subject=Contact depuis votre portfolio & body=Bonjour, je vous contacte concernant...">✉️ envoyez mail</a>
-                        <a class="soc-b" href="tel:+2250710284654">📱 Appelez</a>
-                        <a class="soc-b" href="www.linkedin.com/in/koffi-israel-amani-711568273" title="LinkedIn">💼 Consultez linkedin</a>
-                        <a class="soc-b" href="https://github.com/israelamani100-ctrl/Israel-pro" title="GitHub">🐙 mon Github</a>
+                        <a class="soc-b" href="tel:+2250710284654">📱 </a>
+                        <a class="soc-b" href="www.linkedin.com/in/koffi-israel-amani-711568273" title="LinkedIn">💼 </a>
+                        <a class="soc-b" href="https://github.com/israelamani100-ctrl/Israel-pro" title="GitHub">🐙 </a>
                     </div>
                 </div>
                 <div class="contact-form">
@@ -2699,7 +2737,7 @@
         
         <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
         
-        HTMLEOF
+        
 
         <!-- MODALS -->
         <div class="modal-overlay" id="m1">
