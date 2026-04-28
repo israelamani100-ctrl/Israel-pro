@@ -1,0 +1,3348 @@
+PHOTO_B64=$(cat /home/claude/photo_b64.txt)
+
+cat > /home/claude/portfolio_part1.html << 'HTMLEOF' <!DOCTYPE html>
+    <html lang="fr" data-theme="dark">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Koffi Israel Amani — IT & Networks Portfolio</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800;900&display=swap"
+            rel="stylesheet">
+        <style>
+            :root[data-theme="dark"] {
+                --bg: #05090f;
+                --bg2: #080e18;
+                --bg3: #0b1220;
+                --bg4: #0f182a;
+                --surface: rgba(255, 255, 255, 0.03);
+                --surface2: rgba(255, 255, 255, 0.06);
+                --border: rgba(0, 212, 255, 0.08);
+                --border2: rgba(0, 212, 255, 0.2);
+                --border3: rgba(0, 212, 255, 0.45);
+                --accent: #00d4ff;
+                --accent2: #0055ff;
+                --accent3: #00ff99;
+                --warn: #ff6030;
+                --text: #ddeeff;
+                --text2: #6a90b5;
+                --text3: #2f4d6b;
+                --card-bg: #080e18;
+                --nav-bg: rgba(5, 9, 15, 0.94);
+                --terminal-bg: #020810;
+                --term-green: #00ff99;
+                --term-blue: #00d4ff;
+                --photo-glow: rgba(0, 212, 255, 0.18);
+            }
+
+            :root[data-theme="light"] {
+                --bg: #f4f7fc;
+                --bg2: #eaeef5;
+                --bg3: #e0e6f0;
+                --bg4: #d6dcea;
+                --surface: rgba(0, 0, 0, 0.03);
+                --surface2: rgba(0, 0, 0, 0.06);
+                --border: rgba(0, 100, 200, 0.12);
+                --border2: rgba(0, 100, 200, 0.28);
+                --border3: rgba(0, 100, 200, 0.55);
+                --accent: #0055cc;
+                --accent2: #003399;
+                --accent3: #009955;
+                --warn: #cc4400;
+                --text: #0a1a2e;
+                --text2: #3a5a7a;
+                --text3: #7a9aba;
+                --card-bg: #ffffff;
+                --nav-bg: rgba(244, 247, 252, 0.95);
+                --terminal-bg: #0f1a2a;
+                --term-green: #00cc77;
+                --term-blue: #0088dd;
+                --photo-glow: rgba(0, 100, 200, 0.15);
+            }
+
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+                font-size: 16px;
+            }
+
+            body {
+                font-family: 'Syne', sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                line-height: 1.7;
+                overflow-x: hidden;
+                transition: background 0.3s, color 0.3s;
+            }
+
+            ::-webkit-scrollbar {
+                width: 3px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: var(--accent);
+                border-radius: 99px;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            ul {
+                list-style: none;
+            }
+
+            img {
+                max-width: 100%;
+                display: block;
+            }
+
+            .bg-grid {
+                position: fixed;
+                inset: 0;
+                z-index: 0;
+                pointer-events: none;
+                background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+                background-size: 44px 44px;
+                transition: opacity 0.3s;
+            }
+
+            [data-theme="light"] .bg-grid {
+                opacity: 0.5;
+            }
+
+            .bg-grad {
+                position: fixed;
+                inset: 0;
+                z-index: 0;
+                pointer-events: none;
+                background: radial-gradient(ellipse 70% 50% at 75% -5%, rgba(0, 85, 255, 0.1) 0%, transparent 65%), radial-gradient(ellipse 50% 40% at 5% 85%, rgba(0, 212, 255, 0.07) 0%, transparent 60%);
+            }
+
+            [data-theme="light"] .bg-grad {
+                background: radial-gradient(ellipse 70% 50% at 75% -5%, rgba(0, 85, 204, 0.08) 0%, transparent 65%), radial-gradient(ellipse 50% 40% at 5% 85%, rgba(0, 100, 200, 0.05) 0%, transparent 60%);
+            }
+
+            #scrollBar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 2px;
+                z-index: 1000;
+                background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent3));
+                width: 0;
+                transition: width 0.1s;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 500;
+                height: 62px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 5%;
+                background: var(--nav-bg);
+                backdrop-filter: blur(24px);
+                border-bottom: 1px solid var(--border);
+                transition: background 0.3s;
+            }
+
+            .nav-logo {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.85rem;
+                color: var(--accent);
+                letter-spacing: 1px;
+            }
+
+            .nav-logo em {
+                color: var(--text3);
+                font-style: normal;
+            }
+
+            .nav-links {
+                display: flex;
+                align-items: center;
+                gap: 1.6rem;
+            }
+
+            .nav-links a {
+                font-size: 0.78rem;
+                font-weight: 500;
+                color: var(--text2);
+                letter-spacing: 0.5px;
+                transition: color 0.2s;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
+            .nav-links a:hover,
+            .nav-links a.active {
+                color: var(--accent);
+            }
+
+            .nav-ctrl {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .nbtn {
+                padding: 5px 13px;
+                border: 1px solid var(--border2);
+                border-radius: 6px;
+                background: var(--surface);
+                color: var(--text2);
+                font-size: 0.75rem;
+                font-family: 'JetBrains Mono', monospace;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .nbtn:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+
+            .nbtn.on {
+                border-color: var(--accent);
+                color: var(--accent);
+                background: rgba(0, 212, 255, 0.07);
+            }
+
+            .term-btn {
+                padding: 5px 13px;
+                border: 1px solid rgba(0, 255, 153, 0.3);
+                border-radius: 6px;
+                background: rgba(0, 255, 153, 0.05);
+                color: var(--accent3);
+                font-size: 0.75rem;
+                font-family: 'JetBrains Mono', monospace;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .term-btn:hover {
+                background: rgba(0, 255, 153, 0.12);
+                border-color: var(--accent3);
+            }
+
+            .theme-btn {
+                width: 36px;
+                height: 36px;
+                border: 1px solid var(--border2);
+                border-radius: 8px;
+                background: var(--surface);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem;
+                transition: all 0.2s;
+            }
+
+            .theme-btn:hover {
+                border-color: var(--accent);
+            }
+
+            .menu-btn {
+                display: none;
+                width: 36px;
+                height: 36px;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                background: var(--surface);
+                cursor: pointer;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .menu-btn span {
+                display: block;
+                width: 18px;
+                height: 2px;
+                background: var(--text2);
+                border-radius: 2px;
+            }
+
+            .mob-nav {
+                display: none;
+                position: fixed;
+                top: 62px;
+                left: 0;
+                right: 0;
+                background: var(--nav-bg);
+                backdrop-filter: blur(24px);
+                border-bottom: 1px solid var(--border);
+                flex-direction: column;
+                padding: 1.5rem 5%;
+                gap: 1rem;
+                z-index: 499;
+            }
+
+            .mob-nav.open {
+                display: flex;
+            }
+
+            .mob-nav a {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.88rem;
+                color: var(--text2);
+                padding: 0.4rem 0;
+            }
+
+            .hero {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                padding: 90px 5% 60px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .hero-inner {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 4rem;
+                align-items: center;
+                width: 100%;
+                max-width: 1200px;
+                margin: auto;
+            }
+
+            .hero-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 5px 14px;
+                border: 1px solid rgba(0, 255, 153, 0.25);
+                border-radius: 4px;
+                background: rgba(0, 255, 153, 0.05);
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.72rem;
+                color: var(--accent3);
+                margin-bottom: 1.5rem;
+            }
+
+            .pulse {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--accent3);
+                animation: blink 1.5s infinite;
+            }
+
+            @keyframes blink {
+
+                0%,
+                100% {
+                    opacity: 1
+                }
+
+                50% {
+                    opacity: 0.2
+                }
+            }
+
+            h1.hero-title {
+                font-family: 'Syne', sans-serif;
+                font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+                font-weight: 900;
+                letter-spacing: -2px;
+                line-height: 1.0;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero-role {
+                display: block;
+                font-size: clamp(1rem, 2vw, 1.5rem);
+                font-weight: 400;
+                color: var(--text2);
+                letter-spacing: 0;
+                font-family: 'JetBrains Mono', monospace;
+                margin-top: 0.5rem;
+            }
+
+            .typed {
+                color: var(--accent);
+            }
+
+            .cursor {
+                display: inline-block;
+                width: 2px;
+                height: 1.1em;
+                background: var(--accent);
+                margin-left: 2px;
+                vertical-align: middle;
+                animation: blink 1s infinite;
+            }
+
+            .hero-desc {
+                font-size: 1rem;
+                color: var(--text2);
+                max-width: 540px;
+                margin: 1.5rem 0 2rem;
+                font-weight: 400;
+                line-height: 1.8;
+            }
+
+            .hero-btns {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-bottom: 2.5rem;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 11px 22px;
+                border-radius: 8px;
+                font-size: 0.86rem;
+                font-weight: 700;
+                font-family: 'Syne', sans-serif;
+                cursor: pointer;
+                transition: all 0.25s;
+                border: none;
+                letter-spacing: 0.3px;
+            }
+
+            .btn-p {
+                background: var(--accent);
+                color: #050910;
+                box-shadow: 0 0 28px rgba(0, 212, 255, 0.3);
+            }
+
+            .btn-p:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 36px rgba(0, 212, 255, 0.5);
+            }
+
+            .btn-o {
+                background: transparent;
+                border: 1px solid var(--border2);
+                color: var(--accent);
+            }
+
+            .btn-o:hover {
+                background: rgba(0, 212, 255, 0.08);
+                border-color: var(--accent);
+            }
+
+            .btn-g {
+                background: transparent;
+                border: 1px solid var(--border);
+                color: var(--text2);
+            }
+
+            .btn-g:hover {
+                border-color: var(--text2);
+                color: var(--text);
+            }
+
+            .hero-stats {
+                display: flex;
+                gap: 2.5rem;
+                flex-wrap: wrap;
+            }
+
+            .stat-n {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 1.8rem;
+                font-weight: 700;
+                color: var(--accent);
+                display: block;
+            }
+
+            .stat-l {
+                font-size: 0.68rem;
+                color: var(--text3);
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+
+            /* PHOTO — strategic placement */
+            .photo-wrap {
+                position: relative;
+                flex-shrink: 0;
+            }
+
+            .photo-ring {
+                position: absolute;
+                inset: -12px;
+                border: 1px solid var(--border2);
+                border-radius: 24px;
+                animation: ring-pulse 3s infinite;
+            }
+
+            @keyframes ring-pulse {
+
+                0%,
+                100% {
+                    opacity: 0.3;
+                    transform: scale(1)
+                }
+
+                50% {
+                    opacity: 0.7;
+                    transform: scale(1.01)
+                }
+            }
+
+            .photo-frame {
+                width: 290px;
+                height: 350px;
+                border-radius: 20px;
+                overflow: hidden;
+                border: 1px solid var(--border2);
+                box-shadow: 0 0 60px var(--photo-glow), 0 30px 80px rgba(0, 0, 0, 0.5);
+                position: relative;
+            }
+
+            .photo-frame img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-fit: cover;
+                object-position: top center;
+                filter: saturate(1.05);
+            }
+
+            .photo-frame::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(to bottom, transparent 55%, rgba(5, 9, 15, 0.75));
+                z-index: 1;
+            }
+
+            .photo-corner {
+                position: absolute;
+                width: 22px;
+                height: 22px;
+                border-color: var(--accent);
+                border-style: solid;
+            }
+
+            .photo-corner.tl {
+                top: -2px;
+                left: -2px;
+                border-width: 2px 0 0 2px;
+            }
+
+            .photo-corner.tr {
+                top: -2px;
+                right: -2px;
+                border-width: 2px 2px 0 0;
+            }
+
+            .photo-corner.bl {
+                bottom: -2px;
+                left: -2px;
+                border-width: 0 0 2px 2px;
+            }
+
+            .photo-corner.br {
+                bottom: -2px;
+                right: -2px;
+                border-width: 0 2px 2px 0;
+            }
+
+            .photo-badge {
+                position: absolute;
+                bottom: -14px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--bg3);
+                border: 1px solid var(--border2);
+                border-radius: 8px;
+                padding: 8px 16px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.68rem;
+                color: var(--accent);
+                white-space: nowrap;
+                z-index: 10;
+            }
+
+            .photo-status {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                z-index: 3;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                background: rgba(5, 9, 15, 0.8);
+                backdrop-filter: blur(8px);
+                border: 1px solid var(--border2);
+                border-radius: 6px;
+                padding: 5px 10px;
+            }
+
+            .photo-status .dot {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--accent3);
+                animation: blink 1.5s infinite;
+            }
+
+            .photo-status span {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.62rem;
+                color: var(--accent3);
+            }
+
+            section {
+                padding: 96px 5%;
+                position: relative;
+                z-index: 1;
+            }
+
+            .section-header {
+                margin-bottom: 3.5rem;
+            }
+
+            .s-num {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.68rem;
+                color: var(--text3);
+                letter-spacing: 3px;
+                margin-bottom: 0.5rem;
+            }
+
+            .s-line {
+                width: 3px;
+                height: 44px;
+                background: linear-gradient(to bottom, var(--accent), transparent);
+                margin-bottom: 1rem;
+            }
+
+            .s-title {
+                font-family: 'Syne', sans-serif;
+                font-size: clamp(2rem, 4vw, 2.8rem);
+                font-weight: 900;
+                letter-spacing: -1px;
+                margin-bottom: 1rem;
+            }
+
+            .s-title span {
+                color: var(--accent);
+            }
+
+            .s-sub {
+                font-size: 0.96rem;
+                color: var(--text2);
+                max-width: 580px;
+                font-weight: 400;
+            }
+
+            .alt-bg {
+                background: var(--bg2);
+            }
+
+            .about-grid {
+                display: grid;
+                grid-template-columns: 1.2fr 1fr;
+                gap: 4rem;
+                align-items: start;
+            }
+
+            .a-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 2rem;
+                backdrop-filter: blur(10px);
+            }
+
+            .a-card p {
+                color: var(--text2);
+                margin-bottom: 1rem;
+                font-weight: 400;
+            }
+
+            .hl {
+                color: var(--accent);
+                font-weight: 700;
+            }
+
+            .hl2 {
+                color: var(--accent3);
+                font-weight: 700;
+            }
+
+            .info-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .info-item {
+                background: var(--bg3);
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 12px 16px;
+            }
+
+            .i-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.65rem;
+                color: var(--text3);
+                letter-spacing: 1px;
+                margin-bottom: 4px;
+            }
+
+            .i-val {
+                font-size: 0.85rem;
+                color: var(--text);
+                font-weight: 500;
+            }
+
+            .timeline {
+                position: relative;
+                padding-left: 1.5rem;
+            }
+
+            .timeline::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 1px;
+                background: linear-gradient(to bottom, var(--accent), transparent);
+            }
+
+            .tl-item {
+                position: relative;
+                margin-bottom: 2rem;
+            }
+
+            .tl-dot {
+                position: absolute;
+                left: -1.65rem;
+                top: 5px;
+                width: 11px;
+                height: 11px;
+                border-radius: 50%;
+                background: var(--accent);
+                border: 2px solid var(--bg2);
+                box-shadow: 0 0 10px var(--accent);
+            }
+
+            .tl-year {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.67rem;
+                color: var(--accent);
+                letter-spacing: 1px;
+                margin-bottom: 3px;
+            }
+
+            .tl-title {
+                font-weight: 700;
+                font-size: 0.92rem;
+                margin-bottom: 3px;
+            }
+
+            .tl-desc {
+                font-size: 0.8rem;
+                color: var(--text2);
+            }
+
+            .skills-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .skill-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 1.75rem;
+                transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            }
+
+            .skill-card:hover {
+                border-color: var(--border3);
+                transform: translateY(-4px);
+                box-shadow: 0 0 40px rgba(0, 212, 255, 0.1);
+            }
+
+            .sk-head {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 1.5rem;
+            }
+
+            .sk-icon {
+                width: 42px;
+                height: 42px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+            }
+
+            .si-b {
+                background: rgba(0, 212, 255, 0.1);
+            }
+
+            .si-g {
+                background: rgba(0, 255, 153, 0.09);
+            }
+
+            .si-o {
+                background: rgba(255, 96, 48, 0.1);
+            }
+
+            .si-p {
+                background: rgba(100, 100, 255, 0.1);
+            }
+
+            .sk-title {
+                font-weight: 700;
+                font-size: 0.92rem;
+            }
+
+            .bar-wrap {
+                margin-bottom: 1rem;
+            }
+
+            .bar-label {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.76rem;
+                color: var(--text2);
+                margin-bottom: 6px;
+            }
+
+            .bar-track {
+                height: 4px;
+                background: var(--bg3);
+                border-radius: 99px;
+                overflow: hidden;
+            }
+
+            .bar-fill {
+                height: 100%;
+                border-radius: 99px;
+                width: 0;
+                transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .bf-b {
+                background: linear-gradient(90deg, var(--accent2), var(--accent));
+            }
+
+            .bf-g {
+                background: linear-gradient(90deg, #00aa55, var(--accent3));
+            }
+
+            .bf-o {
+                background: linear-gradient(90deg, var(--warn), #ffaa33);
+            }
+
+            .bf-p {
+                background: linear-gradient(90deg, #4444ff, #8888ff);
+            }
+
+            .pills {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 7px;
+                margin-top: 1rem;
+            }
+
+            .pill {
+                padding: 4px 11px;
+                border: 1px solid var(--border);
+                border-radius: 99px;
+                font-size: 0.72rem;
+                color: var(--text2);
+                background: var(--surface);
+                font-family: 'JetBrains Mono', monospace;
+                transition: all 0.2s;
+                cursor: default;
+            }
+
+            .pill:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+
+            .proj-filters {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-bottom: 2.5rem;
+            }
+
+            .filter-btn {
+                padding: 6px 16px;
+                border-radius: 6px;
+                border: 1px solid var(--border);
+                background: var(--surface);
+                color: var(--text2);
+                font-size: 0.76rem;
+                font-family: 'JetBrains Mono', monospace;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .filter-btn.active,
+            .filter-btn:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+                background: rgba(0, 212, 255, 0.07);
+            }
+
+            .proj-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .proj-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                overflow: hidden;
+                transition: all 0.3s;
+                cursor: pointer;
+            }
+
+            .proj-card:hover {
+                border-color: var(--border2);
+                transform: translateY(-5px);
+                box-shadow: 0 0 40px rgba(0, 212, 255, 0.1);
+            }
+
+            .proj-card.hidden {
+                display: none;
+            }
+
+            .proj-img {
+                height: 150px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 3rem;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .pi-net {
+                background: linear-gradient(135deg, #020810 0%, #061828 100%);
+            }
+
+            .pi-web {
+                background: linear-gradient(135deg, #060210 0%, #140832 100%);
+            }
+
+            .pi-it {
+                background: linear-gradient(135deg, #021208 0%, #062014 100%);
+            }
+
+            .proj-body {
+                padding: 1.5rem;
+            }
+
+            .proj-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-bottom: 0.75rem;
+            }
+
+            .ptag {
+                padding: 3px 8px;
+                border-radius: 4px;
+                font-size: 0.65rem;
+                font-family: 'JetBrains Mono', monospace;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+            }
+
+            .pt-n {
+                background: rgba(0, 212, 255, 0.1);
+                color: var(--accent);
+            }
+
+            .pt-w {
+                background: rgba(100, 100, 255, 0.1);
+                color: #8888ff;
+            }
+
+            .pt-i {
+                background: rgba(0, 255, 153, 0.1);
+                color: var(--accent3);
+            }
+
+            .proj-title {
+                font-weight: 700;
+                font-size: 0.96rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .proj-desc {
+                font-size: 0.82rem;
+                color: var(--text2);
+                margin-bottom: 1rem;
+            }
+
+            .proj-tech {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-bottom: 1rem;
+            }
+
+            .tchip {
+                padding: 3px 8px;
+                background: var(--bg3);
+                border-radius: 4px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.67rem;
+                color: var(--text3);
+            }
+
+            .proj-foot {
+                display: flex;
+                gap: 8px;
+            }
+
+            .bsm {
+                padding: 6px 13px;
+                border-radius: 6px;
+                font-size: 0.75rem;
+                font-family: 'JetBrains Mono', monospace;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .bsm-p {
+                background: rgba(0, 212, 255, 0.1);
+                color: var(--accent);
+                border: 1px solid rgba(0, 212, 255, 0.2);
+            }
+
+            .bsm-p:hover {
+                background: rgba(0, 212, 255, 0.2);
+            }
+
+            .bsm-g {
+                background: transparent;
+                color: var(--text3);
+                border: 1px solid var(--border);
+            }
+
+            .bsm-g:hover {
+                color: var(--text);
+                border-color: var(--text3);
+            }
+
+            .exp-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 2rem;
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 1.5rem;
+                margin-bottom: 1.5rem;
+                transition: border-color 0.3s;
+            }
+
+            .exp-card:hover {
+                border-color: var(--border2);
+            }
+
+            .exp-logo {
+                width: 56px;
+                height: 56px;
+                background: rgba(0, 212, 255, 0.08);
+                border: 1px solid var(--border2);
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                flex-shrink: 0;
+            }
+
+            .exp-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                font-size: 0.72rem;
+                color: var(--text3);
+                margin-bottom: 0.5rem;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
+            .exp-title {
+                font-weight: 800;
+                font-size: 1rem;
+                margin-bottom: 2px;
+            }
+
+            .exp-co {
+                color: var(--accent);
+                font-weight: 600;
+                font-size: 0.85rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .exp-list li {
+                font-size: 0.82rem;
+                color: var(--text2);
+                padding: 3px 0 3px 16px;
+                position: relative;
+            }
+
+            .exp-list li::before {
+                content: '▸';
+                position: absolute;
+                left: 0;
+                color: var(--accent);
+            }
+
+            .cv-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 2.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 2rem;
+                flex-wrap: wrap;
+            }
+
+            .cv-file {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                background: var(--bg3);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 1.25rem 2rem;
+            }
+
+            .cv-icon {
+                font-size: 2.8rem;
+            }
+
+            .cv-name {
+                font-weight: 700;
+                font-size: 1rem;
+                margin-bottom: 2px;
+            }
+
+            .cv-meta {
+                font-size: 0.75rem;
+                color: var(--text3);
+                font-family: 'JetBrains Mono', monospace;
+            }
+
+            .book-grid {
+                display: grid;
+                grid-template-columns: 1fr 1.3fr;
+                gap: 2rem;
+            }
+
+            .cal-card,
+            .book-form {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 2rem;
+            }
+
+            .cal-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1.5rem;
+            }
+
+            .cal-nav-row {
+                display: flex;
+                gap: 6px;
+            }
+
+            .cal-nb {
+                width: 30px;
+                height: 30px;
+                border: 1px solid var(--border);
+                background: var(--surface);
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                color: var(--text2);
+                transition: all 0.2s;
+                font-size: 0.9rem;
+            }
+
+            .cal-nb:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+
+            .cal-month {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.85rem;
+                color: var(--text);
+            }
+
+            .cal-dow {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                text-align: center;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.62rem;
+                color: var(--text3);
+                letter-spacing: 1px;
+                margin-bottom: 0.5rem;
+                text-transform: uppercase;
+            }
+
+            .cal-grid {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 3px;
+            }
+
+            .c-day {
+                aspect-ratio: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 6px;
+                font-size: 0.76rem;
+                cursor: pointer;
+                font-family: 'JetBrains Mono', monospace;
+                color: var(--text2);
+                transition: all 0.15s;
+            }
+
+            .c-day:hover {
+                background: rgba(0, 212, 255, 0.1);
+                color: var(--accent);
+            }
+
+            .c-day.sel {
+                background: var(--accent);
+                color: #050910;
+                font-weight: 700;
+            }
+
+            .c-day.today {
+                border: 1px solid var(--accent2);
+                color: var(--accent2);
+            }
+
+            .c-day.emp,
+            .c-day.past {
+                opacity: 0.2;
+                cursor: not-allowed;
+            }
+
+            .time-slots-wrap {
+                margin-top: 1.5rem;
+            }
+
+            .ts-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.68rem;
+                color: var(--text3);
+                margin-bottom: 0.75rem;
+                letter-spacing: 1px;
+            }
+
+            .time-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+
+            .t-slot {
+                padding: 7px;
+                text-align: center;
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.72rem;
+                cursor: pointer;
+                color: var(--text2);
+                transition: all 0.15s;
+            }
+
+            .t-slot:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+
+            .t-slot.sel {
+                background: var(--accent);
+                color: #050910;
+                border-color: var(--accent);
+            }
+
+            .t-slot.unav {
+                opacity: 0.3;
+                cursor: not-allowed;
+            }
+
+            .form-g {
+                margin-bottom: 1.1rem;
+            }
+
+            .form-label {
+                display: block;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.68rem;
+                color: var(--text3);
+                letter-spacing: 1px;
+                margin-bottom: 7px;
+            }
+
+            .form-input,
+            .form-select,
+            .form-ta {
+                width: 100%;
+                padding: 10px 14px;
+                background: var(--bg3);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                color: var(--text);
+                font-size: 0.85rem;
+                font-family: 'Syne', sans-serif;
+                transition: border-color 0.2s;
+                outline: none;
+            }
+
+            .form-input:focus,
+            .form-select:focus,
+            .form-ta:focus {
+                border-color: var(--accent);
+            }
+
+            .form-select {
+                appearance: none;
+                cursor: pointer;
+            }
+
+            .form-ta {
+                resize: vertical;
+                min-height: 80px;
+            }
+
+            .sel-preview {
+                padding: 10px 14px;
+                background: var(--bg3);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.75rem;
+                color: var(--text3);
+                margin-bottom: 1.1rem;
+            }
+
+            .sel-preview.has {
+                color: var(--accent);
+                border-color: rgba(0, 212, 255, 0.2);
+            }
+
+            .succ-msg {
+                display: none;
+                padding: 1.25rem;
+                background: rgba(0, 255, 153, 0.07);
+                border: 1px solid rgba(0, 255, 153, 0.2);
+                border-radius: 8px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.82rem;
+                color: var(--accent3);
+                text-align: center;
+            }
+
+            .contact-grid {
+                display: grid;
+                grid-template-columns: 1fr 1.6fr;
+                gap: 2.5rem;
+            }
+
+            .contact-info,
+            .contact-form {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 2rem;
+            }
+
+            .c-item {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                margin-bottom: 1.5rem;
+            }
+
+            .c-ico {
+                width: 42px;
+                height: 42px;
+                background: rgba(0, 212, 255, 0.08);
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.1rem;
+                flex-shrink: 0;
+            }
+
+            .c-lab {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.65rem;
+                color: var(--text3);
+                margin-bottom: 2px;
+            }
+
+            .c-val {
+                font-size: 0.85rem;
+                color: var(--text);
+                font-weight: 500;
+            }
+
+            .socials {
+                display: flex;
+                gap: 8px;
+                margin-top: 1.5rem;
+            }
+
+            .soc-b {
+                width: 40px;
+                height: 40px;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem;
+                transition: all 0.2s;
+                cursor: pointer;
+            }
+
+            .soc-b:hover {
+                border-color: var(--accent);
+                background: rgba(0, 212, 255, 0.06);
+            }
+
+            /* TERMINAL — Kali Linux Style */
+            .term-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                z-index: 800;
+                background: rgba(0, 0, 0, 0.88);
+                backdrop-filter: blur(12px);
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+            }
+
+            .term-overlay.open {
+                display: flex;
+            }
+
+            .term-box {
+                background: var(--terminal-bg);
+                border: 1px solid rgba(0, 212, 255, 0.3);
+                border-radius: 14px;
+                width: 100%;
+                max-width: 820px;
+                height: 560px;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0 0 80px rgba(0, 212, 255, 0.15), 0 40px 80px rgba(0, 0, 0, 0.7);
+                overflow: hidden;
+            }
+
+            .term-header {
+                background: rgba(0, 212, 255, 0.04);
+                border-bottom: 1px solid rgba(0, 212, 255, 0.12);
+                padding: 12px 20px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .tdots {
+                display: flex;
+                gap: 8px;
+            }
+
+            .tdot {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+            }
+
+            .td-r {
+                background: #ff5f57;
+            }
+
+            .td-y {
+                background: #febc2e;
+            }
+
+            .td-g {
+                background: #28c840;
+            }
+
+            .term-title-bar {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.72rem;
+                color: var(--text3);
+                letter-spacing: 1px;
+            }
+
+            .term-x {
+                background: none;
+                border: none;
+                color: var(--text3);
+                cursor: pointer;
+                font-size: 1rem;
+                transition: color 0.2s;
+                padding: 4px;
+            }
+
+            .term-x:hover {
+                color: var(--accent);
+            }
+
+            .term-body {
+                flex: 1;
+                overflow-y: auto;
+                padding: 18px 20px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.8rem;
+                line-height: 1.9;
+            }
+
+            .term-body::-webkit-scrollbar {
+                width: 3px;
+            }
+
+            .term-body::-webkit-scrollbar-thumb {
+                background: rgba(0, 212, 255, 0.3);
+            }
+
+            .t-line {
+                margin-bottom: 1px;
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .t-prompt {
+                color: var(--term-green);
+            }
+
+            .t-at {
+                color: var(--term-blue);
+            }
+
+            .t-path {
+                color: var(--text2);
+            }
+
+            .t-out {
+                color: #c8d8e8;
+                padding-left: 2px;
+            }
+
+            .tc-blue {
+                color: var(--term-blue);
+            }
+
+            .tc-green {
+                color: var(--term-green);
+            }
+
+            .tc-warn {
+                color: #ff9933;
+            }
+
+            .tc-red {
+                color: #ff4444;
+            }
+
+            .tc-dim {
+                color: #3a5a7a;
+            }
+
+            .tc-head {
+                color: #f0f8ff;
+                font-weight: 700;
+            }
+
+            .tc-yellow {
+                color: #ffe066;
+            }
+
+            .tc-magenta {
+                color: #ff77ff;
+            }
+
+            .term-input-row {
+                border-top: 1px solid rgba(0, 212, 255, 0.1);
+                padding: 12px 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .term-prompt-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.8rem;
+                white-space: nowrap;
+            }
+
+            .term-input {
+                flex: 1;
+                background: none;
+                border: none;
+                outline: none;
+                color: var(--text);
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.8rem;
+                caret-color: var(--accent);
+            }
+
+            /* ADMIN */
+            .admin-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                z-index: 700;
+                background: rgba(0, 0, 0, 0.92);
+                backdrop-filter: blur(14px);
+                overflow-y: auto;
+                padding: 2rem;
+            }
+
+            .admin-overlay.open {
+                display: block;
+            }
+
+            .admin-box {
+                max-width: 920px;
+                margin: auto;
+                background: var(--bg2);
+                border: 1px solid var(--border2);
+                border-radius: 20px;
+                overflow: hidden;
+            }
+
+            .admin-head {
+                background: rgba(0, 212, 255, 0.05);
+                border-bottom: 1px solid var(--border2);
+                padding: 1.25rem 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .admin-title {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.85rem;
+                color: var(--accent);
+                letter-spacing: 1px;
+            }
+
+            .admin-close {
+                background: none;
+                border: 1px solid var(--border);
+                color: var(--text2);
+                border-radius: 6px;
+                padding: 5px 14px;
+                cursor: pointer;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.72rem;
+                transition: all 0.2s;
+            }
+
+            .admin-close:hover {
+                border-color: var(--warn);
+                color: var(--warn);
+            }
+
+            .admin-tabs {
+                display: flex;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .admin-tab {
+                padding: 12px 18px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.75rem;
+                color: var(--text3);
+                cursor: pointer;
+                transition: all 0.2s;
+                border-bottom: 2px solid transparent;
+            }
+
+            .admin-tab.active {
+                color: var(--accent);
+                border-bottom-color: var(--accent);
+            }
+
+            .admin-content {
+                padding: 2rem;
+            }
+
+            .admin-panel {
+                display: none;
+            }
+
+            .admin-panel.active {
+                display: block;
+            }
+
+            .admin-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .admin-table th,
+            .admin-table td {
+                padding: 10px 14px;
+                text-align: left;
+                font-size: 0.79rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .admin-table th {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.65rem;
+                color: var(--text3);
+                letter-spacing: 1px;
+                text-transform: uppercase;
+            }
+
+            .admin-table td {
+                color: var(--text2);
+            }
+
+            .sbadge {
+                padding: 3px 9px;
+                border-radius: 99px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.65rem;
+            }
+
+            .sb-p {
+                background: rgba(255, 170, 0, 0.1);
+                color: #ffaa00;
+            }
+
+            .sb-c {
+                background: rgba(0, 255, 153, 0.1);
+                color: var(--accent3);
+            }
+
+            .addlab-form {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .addlab-form .full {
+                grid-column: 1/-1;
+            }
+
+            .modal-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                z-index: 600;
+                background: rgba(0, 0, 0, 0.78);
+                backdrop-filter: blur(8px);
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+            }
+
+            .modal-overlay.open {
+                display: flex;
+            }
+
+            .modal {
+                background: var(--bg2);
+                border: 1px solid var(--border2);
+                border-radius: 20px;
+                max-width: 640px;
+                width: 100%;
+                padding: 2.5rem;
+                position: relative;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .modal-x {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                width: 30px;
+                height: 30px;
+                border: 1px solid var(--border);
+                background: var(--surface);
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 0.9rem;
+                color: var(--text2);
+                transition: all 0.2s;
+            }
+
+            .modal-x:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+
+            .modal-tech {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-bottom: 1.25rem;
+            }
+
+            .modal-li li {
+                font-size: 0.82rem;
+                color: var(--text2);
+                padding: 4px 0 4px 16px;
+                position: relative;
+            }
+
+            .modal-li li::before {
+                content: '▸';
+                position: absolute;
+                left: 0;
+                color: var(--accent);
+            }
+
+            footer {
+                background: var(--bg);
+                border-top: 1px solid var(--border);
+                padding: 3rem 5% 2rem;
+            }
+
+            .footer-grid {
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr;
+                gap: 3rem;
+                margin-bottom: 2rem;
+            }
+
+            .footer-logo {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 1rem;
+                color: var(--accent);
+                margin-bottom: 0.75rem;
+            }
+
+            .footer-tag {
+                font-size: 0.82rem;
+                color: var(--text3);
+                max-width: 300px;
+            }
+
+            .footer-col h4 {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.7rem;
+                color: var(--text3);
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                margin-bottom: 1rem;
+            }
+
+            .footer-col a {
+                display: block;
+                font-size: 0.8rem;
+                color: var(--text3);
+                margin-bottom: 0.5rem;
+                transition: color 0.2s;
+            }
+
+            .footer-col a:hover {
+                color: var(--accent);
+            }
+
+            .footer-bottom {
+                border-top: 1px solid var(--border);
+                padding-top: 1.5rem;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .footer-bottom p {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.72rem;
+                color: var(--text3);
+            }
+
+            .footer-bottom span {
+                color: var(--accent);
+            }
+
+            .back-top {
+                position: fixed;
+                bottom: 28px;
+                right: 28px;
+                z-index: 50;
+                width: 44px;
+                height: 44px;
+                background: var(--accent);
+                color: #050910;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem;
+                cursor: pointer;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.3s;
+                box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+                border: none;
+                font-family: 'JetBrains Mono', monospace;
+                font-weight: 700;
+            }
+
+            .back-top.vis {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .back-top:hover {
+                transform: translateY(-3px);
+            }
+
+            .fade-up {
+                opacity: 0;
+                transform: translateY(28px);
+                transition: opacity 0.7s ease, transform 0.7s ease;
+            }
+
+            .fade-up.vis {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .d1 {
+                transition-delay: 0.1s;
+            }
+
+            .d2 {
+                transition-delay: 0.2s;
+            }
+
+            .d3 {
+                transition-delay: 0.3s;
+            }
+
+            .d4 {
+                transition-delay: 0.4s;
+            }
+
+            /* API STATUS BADGE */
+            .api-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 4px 10px;
+                border: 1px solid var(--border);
+                border-radius: 4px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.65rem;
+                color: var(--text3);
+                background: var(--surface);
+            }
+
+            .api-badge .dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--accent3);
+                animation: blink 2s infinite;
+            }
+
+            @media(max-width:1024px) {
+                .hero-inner {
+                    grid-template-columns: 1fr;
+                }
+
+                .photo-wrap {
+                    display: none;
+                }
+
+                .about-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .book-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .contact-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .footer-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+
+            @media(max-width:768px) {
+                .nav-links {
+                    display: none;
+                }
+
+                .menu-btn {
+                    display: flex;
+                }
+
+                .footer-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .addlab-form {
+                    grid-template-columns: 1fr;
+                }
+
+                .exp-card {
+                    grid-template-columns: 1fr;
+                }
+
+                section {
+                    padding: 68px 5%;
+                }
+            }
+
+            @media(max-width:600px) {
+                .hero h1 {
+                    font-size: 2.2rem;
+                }
+
+                .proj-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .cv-card {
+                    flex-direction: column;
+                }
+
+                .info-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        HTMLEOF
+
+        <div class="bg-grid"></div>
+        <div class="bg-grad"></div>
+        <div id="scrollBar"></div>
+        
+        <nav id="navbar">
+            <div class="nav-logo">&gt; KOFFI<em>_</em>ISRAEL<em>.</em>AMANI</div>
+            <ul class="nav-links">
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#skills">Compétences</a></li>
+                <li><a href="#projects">Projets</a></li>
+                <li><a href="#experience">Expérience</a></li>
+                <li><a href="#cv">CV</a></li>
+                <li><a href="#booking">Rendez-vous</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-ctrl">
+                <button class="term-btn" onclick="openTerminal()">$ terminal</button>
+                <button class="nbtn" onclick="openAdmin()">⚙ Admin</button>
+                <button class="nbtn" id="langFr" onclick="setLang('fr')">🇫🇷 FR</button>
+                <button class="nbtn" id="langEn" onclick="setLang('en')">🇬🇧 EN</button>
+                <button class="theme-btn" onclick="toggleTheme()" title="Changer le thème" id="themeBtn">🌙</button>
+                <button class="menu-btn" onclick="toggleMenu()" id="menuBtn"><span></span><span></span><span></span></button>
+            </div>
+        </nav>
+        <div class="mob-nav" id="mobNav">
+            <a href="#about" onclick="closeMenu()">À propos</a>
+            <a href="#skills" onclick="closeMenu()">Compétences</a>
+            <a href="#projects" onclick="closeMenu()">Projets</a>
+            <a href="#experience" onclick="closeMenu()">Expérience</a>
+            <a href="#cv" onclick="closeMenu()">CV</a>
+            <a href="#booking" onclick="closeMenu()">Rendez-vous</a>
+            <a href="#contact" onclick="closeMenu()">Contact</a>
+            <a href="#" onclick="openTerminal();closeMenu()">$ Terminal</a>
+        </div>
+        
+        <section class="hero" id="hero">
+            <div class="hero-inner">
+                <div class="hero-text">
+                    <div class="hero-badge fade-up">
+                        <div class="pulse"></div>
+                        <span id="hero-badge-txt">Disponible — Stage / Emploi · Abidjan & Remote</span>
+                    </div>
+                    <h1 class="hero-title fade-up d1">
+                        Koffi Israel<br>Amani
+                        <span class="hero-role">// <span class="typed" id="typedText"></span><span class="cursor"></span></span>
+                    </h1>
+                    <p class="hero-desc fade-up d2" id="hero-desc-txt">Technicien IT & Réseaux avec compétences CCNA. Spécialisé
+                        en infrastructures LAN, support utilisateurs, développement web et simulation réseau avancée sous Cisco
+                        Packet Tracer.</p>
+                    <div class="hero-btns fade-up d3">
+                        <a href="#projects" class="btn btn-p">🚀 <span id="btn1-txt">Voir le portfolio</span></a>
+                        <a href="KOFFIISRAEL_AMANI_CV.pdf" class="btn btn-o" download>⬇ <span id="btn2-txt">Télécharger
+                                CV</span></a>
+                        <a href="#contact" class="btn btn-g">✉ <span id="btn3-txt">Me contacter</span></a>
+                    </div>
+                    <div class="hero-stats fade-up d4">
+                        <div><span class="stat-n">CCNA</span><span class="stat-l" id="stat1">En cours</span></div>
+                        <div><span class="stat-n">6+</span><span class="stat-l" id="stat2">Mois de stage</span></div>
+                        <div><span class="stat-n">10+</span><span class="stat-l" id="stat3">Projets</span></div>
+                        <div><span class="stat-n">BTS</span><span class="stat-l" id="stat4">Informatique</span></div>
+                    </div>
+                </div>
+        
+                <div class="photo-wrap fade-up d2">
+                    <div class="photo-ring"></div>
+                    <div class="photo-corner tl"></div>
+                    <div class="photo-corner tr"></div>
+                    <div class="photo-corner bl"></div>
+                    <div class="photo-corner br"></div>
+                    <div class="photo-frame">
+                        <div class="photo-status">
+                            <div class="dot"></div><span>DISPONIBLE</span>
+                        </div>
+                        <img src="isral-profil1-cv.jpeg" alt="Koffi Israel Amani — Technicien IT & Réseaux">
+                    </div>
+                    <div class="photo-badge">KOFFI_ISRAEL.AMANI // IT & NETWORKS</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="about" class="alt-bg">
+            <div class="section-header fade-up">
+                <div class="s-num">// 01</div>
+                <div class="s-line"></div>
+                <h2 class="s-title">À <span>propos</span></h2>
+                <p class="s-sub">Passionné par les réseaux et les systèmes, je cherche à contribuer à des projets techniques
+                    innovants.</p>
+            </div>
+            <div class="about-grid">
+                <div>
+                    <div class="a-card fade-up">
+                        <p>Je suis un <span class="hl">technicien IT & Réseaux</span> basé à Abidjan, avec de solides
+                            compétences en <span class="hl">réseaux CCNA</span>, <span class="hl">support utilisateurs</span> et
+                            <span class="hl">développement web</span>. Mon parcours combine une formation académique rigoureuse
+                            et une expérience professionnelle concrète au sein d'une institution gouvernementale.</p>
+                        <p>Mon objectif est d'intégrer une équipe IT dynamique en tant qu'<span class="hl">ingénieur
+                                réseaux</span> ou <span class="hl2">technicien support senior</span>. Je prépare actuellement ma
+                            certification CCNA chez SKILLGATE-GROUP.</p>
+                        <p>Mon stage au <span class="hl">Ministère du Tourisme et des Loisirs</span> m'a permis d'acquérir une
+                            expérience réelle en environnement IT : support, administration réseau et développement
+                            d'applications métiers.</p>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="i-label">LOCALISATION</div>
+                                <div class="i-val">📍 Abidjan, Côte d'Ivoire</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="i-label">DISPONIBILITÉ</div>
+                                <div class="i-val">✅ Immédiate</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="i-label">MOBILE / WHATSAPP</div>
+                                <div class="i-val">+225 07 10 28 46 54</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="i-label">EMAIL</div>
+                                <div class="i-val">amanikoffiisrael26<br>@gmail.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-up d1">
+                    <h3
+                        style="font-size:0.7rem;font-family:'JetBrains Mono',monospace;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:1.5rem;">
+                        // PARCOURS</h3>
+                    <div class="timeline">
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-year">02/2026 — En cours</div>
+                            <div class="tl-title">Formation CCNA — SKILLGATE-GROUP</div>
+                            <div class="tl-desc">Réseaux Informatiques · Abidjan</div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-year">02/2025 — 07/2025</div>
+                            <div class="tl-title">Stage — Ministère du Tourisme & Loisirs</div>
+                            <div class="tl-desc">Dev IT & Réseaux · Abidjan</div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-year">2024</div>
+                            <div class="tl-title">Projets Réseaux — Cisco Packet Tracer</div>
+                            <div class="tl-desc">VLAN, OSPF, GRE, DNS, FTP, Mail</div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-year">10/2021 — 10/2023</div>
+                            <div class="tl-title">BTS Informatique — ISCAT Abidjan</div>
+                            <div class="tl-desc">Développeur d'Application</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="skills">
+            <div class="section-header fade-up">
+                <div class="s-num">// 02</div>
+                <div class="s-line"></div>
+                <h2 class="s-title">Stack <span>Technique</span></h2>
+                <p class="s-sub">Réseaux CCNA · Support IT · Développement Web Full-Stack</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card fade-up">
+                    <div class="sk-head">
+                        <div class="sk-icon si-b">🌐</div>
+                        <div class="sk-title">Réseaux Informatiques</div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>VLAN / Trunk / STP</span><span>85%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-b" data-w="85"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>OSPF / RIP / Static</span><span>80%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-b" data-w="80"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>DNS / DHCP / FTP</span><span>78%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-b" data-w="78"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>GRE Tunnel / VPN</span><span>70%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-b" data-w="70"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Cisco IOS / CLI</span><span>82%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-b" data-w="82"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card fade-up d1">
+                    <div class="sk-head">
+                        <div class="sk-icon si-p">💻</div>
+                        <div class="sk-title">Développement Web</div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>HTML / CSS</span><span>88%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-p" data-w="88"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>JavaScript</span><span>75%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-p" data-w="75"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>PHP / Laravel</span><span>80%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-p" data-w="80"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>MySQL / BDD</span><span>76%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-p" data-w="76"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Bootstrap / Tailwind</span><span>72%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-p" data-w="72"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card fade-up d2">
+                    <div class="sk-head">
+                        <div class="sk-icon si-g">🛠️</div>
+                        <div class="sk-title">Support IT</div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Windows Server</span><span>75%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-g" data-w="75"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Maintenance PC</span><span>85%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-g" data-w="85"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Active Directory</span><span>65%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-g" data-w="65"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Linux (Ubuntu)</span><span>68%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-g" data-w="68"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Assistance utilisateurs</span><span>90%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-g" data-w="90"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card fade-up d3">
+                    <div class="sk-head">
+                        <div class="sk-icon si-o">⚙️</div>
+                        <div class="sk-title">Outils & Environnements</div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Cisco Packet Tracer</span><span>88%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-o" data-w="88"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>VS Code / Git</span><span>80%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-o" data-w="80"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Wireshark</span><span>70%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-o" data-w="70"></div>
+                        </div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>VMware / VirtualBox</span><span>72%</span></div>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-o" data-w="72"></div>
+                        </div>
+                    </div>
+                    <div class="pills"><span class="pill">GitHub</span><span class="pill">XAMPP</span><span
+                            class="pill">Putty</span><span class="pill">Figma</span><span class="pill">Python</span><span
+                            class="pill">Office 365</span></div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects" class="alt-bg">
+            <div class="section-header fade-up">
+                <div class="s-num">// 03</div>
+                <div class="s-line"></div>
+                <h2 class="s-title">Labs & <span>Projets</span></h2>
+                <p class="s-sub">Labos Packet Tracer, applications web, solutions IT — projets réels et académiques.</p>
+            </div>
+            <div class="proj-filters fade-up">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="network">🌐 Réseaux</button>
+                <button class="filter-btn" data-filter="web">💻 Web</button>
+                <button class="filter-btn" data-filter="it">🛠 Support IT</button>
+            </div>
+            <div class="proj-grid" id="projectsGrid">
+                <div class="proj-card fade-up" data-category="network" onclick="openModal('m1')">
+                    <div class="proj-img pi-net">🏢</div>
+                    <div class="proj-body">
+                        <div class="proj-tags"><span class="ptag pt-n">RÉSEAU</span><span class="ptag pt-n">Packet Tracer</span>
+                        </div>
+                        <div class="proj-title">Réseau Multi-Sites d'Entreprise</div>
+                        <div class="proj-desc">Architecture LAN/WAN inter-agences avec routage dynamique OSPF, VLAN et services
+                            centralisés.</div>
+                        <div class="proj-tech"><span class="tchip">OSPF</span><span class="tchip">VLAN</span><span
+                                class="tchip">GRE</span><span class="tchip">DNS</span></div>
+                        <div class="proj-foot"><button class="bsm bsm-p">Voir détails</button><button class="bsm bsm-g">⬇
+                                PDF</button></div>
+                    </div>
+                </div>
+                <div class="proj-card fade-up d1" data-category="network" onclick="openModal('m2')">
+                    <div class="proj-img pi-net">🔀</div>
+                    <div class="proj-body">
+                        <div class="proj-tags"><span class="ptag pt-n">RÉSEAU</span><span class="ptag pt-n">VLAN</span></div>
+                        <div class="proj-title">Segmentation VLAN & Inter-VLAN</div>
+                        <div class="proj-desc">Réseau d'entreprise segmenté par département avec routage inter-VLAN et ACLs de
+                            sécurité.</div>
+                        <div class="proj-tech"><span class="tchip">802.1Q</span><span class="tchip">STP</span><span
+                                class="tchip">ACL</span><span class="tchip">Layer 3</span></div>
+                        <div class="proj-foot"><button class="bsm bsm-p">Voir détails</button><button class="bsm bsm-g">⬇
+                                PDF</button></div>
+                    </div>
+                </div>
+                <div class="proj-card fade-up d2" data-category="network" onclick="openModal('m3')">
+                    <div class="proj-img pi-net">🚇</div>
+                    <div class="proj-body">
+                        <div class="proj-tags"><span class="ptag pt-n">RÉSEAU</span><span class="ptag pt-n">VPN</span></div>
+                        <div class="proj-title">Tunnel GRE Inter-Sites</div>
+                        <div class="proj-desc">Tunnel GRE pour interconnecter deux sites distants avec propagation OSPF et
+                            chiffrement.</div>
+                        <div class="proj-tech"><span class="tchip">GRE</span><span class="tchip">OSPF</span><span
+                                class="tchip">IPSec</span><span class="tchip">WAN</span></div>
+                        <div class="proj-foot"><button class="bsm bsm-p">Voir détails</button><button class="bsm bsm-g">⬇
+                                PDF</button></div>
+                    </div>
+                </div>
+                <div class="proj-card fade-up" data-category="network" onclick="openModal('m4')">
+                    <div class="proj-img pi-net">🖥️</div>
+                    <div class="proj-body">
+                        <div class="proj-tags"><span class="ptag pt-n">RÉSEAU</span><span class="ptag pt-n">Services</span>
+                        </div>
+                        <div class="proj-title">Infrastructure DNS / FTP / Mail</div>
+                        <div class="proj-desc">Déploiement complet de serveurs de services réseau dans un environnement simulé
+                            Packet Tracer.</div>
+                        <div class="proj-tech"><span class="tchip">DNS</span><span class="tchip">FTP</span><span
+                                class="tchip">SMTP</span><span class="tchip">DHCP</span></div>
+                        <div class="proj-foot"><button class="bsm bsm-p">Voir détails</button><button class="bsm bsm-g">⬇
+                                PDF</button></div>
+                    </div>
+                </div>
+                <div class="proj-card fade-up d1" data-category="web" onclick="openModal('m5')">
+                    <div class="proj-img pi-web">📋</div>
+                    <div class="proj-body">
+                        <div class="proj-tags"><span class="ptag pt-w">WEB</span><span class="ptag pt-w">Laravel</span></div>
+                        <div class="proj-title">App Gestion des Congés</div>
+                        <div class="proj-desc">Application web Laravel/PHP/MySQL pour la gestion des congés et demandes IT au
+                            Ministère du Tourisme.</div>
+                        <div class="proj-tech"><span class="tchip">Laravel</span><span class="tchip">PHP</span><span
+                                class="tchip">MySQL</span><span class="tchip">Python</span></div>
+                        <div class="proj-foot"><button class="bsm bsm-p">Voir détails</button><button
+                                class="bsm bsm-g">GitHub</button></div>
+                    </div>
+                </div>
+                <div class="proj-card fade-up d2" data-category="it" onclick="openModal('m6')">
+                    <div class="proj-img pi-it">📦</div>
+                    <div class="proj-body">
+                        <div class="proj-tags"><span class="ptag pt-i">SUPPORT IT</span><span class="ptag pt-i">Stage</span>
+                        </div>
+                        <div class="proj-title">Inventaire Parc Informatique</div>
+                        <div class="proj-desc">Système de gestion du parc informatique (50+ postes) au sein du Ministère du
+                            Tourisme.</div>
+                        <div class="proj-tech"><span class="tchip">PHP</span><span class="tchip">MySQL</span><span
+                                class="tchip">Windows</span></div>
+                        <div class="proj-foot"><button class="bsm bsm-p">Voir détails</button><button class="bsm bsm-g">⬇
+                                Rapport</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="experience">
+            <div class="section-header fade-up">
+                <div class="s-num">// 04</div>
+                <div class="s-line"></div>
+                <h2 class="s-title">Expérience <span>Professionnelle</span></h2>
+                <p class="s-sub">Expérience concrète acquise en environnement IT institutionnel.</p>
+            </div>
+            <div class="exp-card fade-up">
+                <div class="exp-logo">🏛️</div>
+                <div>
+                    <div class="exp-meta"><span>📅 02/2025 — 07/2025 (6 mois)</span><span>📍 Abidjan, Côte
+                            d'Ivoire</span><span>🔖 Stage</span></div>
+                    <div class="exp-title">Développeur · Support IT & Réseaux — Stagiaire</div>
+                    <div class="exp-co">Ministère du Tourisme et des Loisirs de Côte d'Ivoire</div>
+                    <ul class="exp-list">
+                        <li>Assistance et support technique aux utilisateurs (diagnostic et résolution des incidents)</li>
+                        <li>Développement d'une application de gestion des congés (PHP/Laravel, Python)</li>
+                        <li>Administration réseau local : configuration switches, câblage, diagnostic IP</li>
+                        <li>Inventaire et maintenance du parc informatique (50+ postes)</li>
+                        <li>Installation, configuration et mise à jour des systèmes Windows et logiciels métiers</li>
+                        <li>Collaboration avec les équipes pour améliorer la performance et disponibilité du SI</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exp-card fade-up d1">
+                <div class="exp-logo">🖧</div>
+                <div>
+                    <div class="exp-meta"><span>📅 2024 — En cours</span><span>📍 Auto-formation</span><span>🔖 Projet
+                            Technique</span></div>
+                    <div class="exp-title">Ingénierie Réseaux — Projet Cisco Packet Tracer</div>
+                    <div class="exp-co">Infrastructure Réseau Multi-Sites Simulé</div>
+                    <ul class="exp-list">
+                        <li>Conception d'un réseau multi-sites (siège + 2 agences) interconnecté</li>
+                        <li>Mise en place de la segmentation VLAN par service (utilisateurs, serveurs, invités)</li>
+                        <li>Configuration OSPF, tunnels GRE, inter-VLAN routing</li>
+                        <li>Administration DNS, FTP, Mail sous Packet Tracer</li>
+                        <li>Diagnostic et résolution de pannes réseau complètes</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="cv" class="alt-bg">
+            <div class="section-header fade-up">
+                <div class="s-num">// 05</div>
+                <div class="s-line"></div>
+                <h2 class="s-title">Mon <span>CV</span></h2>
+                <p class="s-sub">Téléchargez mon CV ou consultez-le directement.</p>
+            </div>
+            <div class="cv-card fade-up">
+                <div class="cv-file">
+                    <div class="cv-icon">📄</div>
+                    <div>
+                        <div class="cv-name">KOFFI_ISRAEL_AMANI_CV.pdf</div>
+                        <div class="cv-meta">Technicien IT & Réseaux · Mis à jour 2025 · 1 page</div>
+                    </div>
+                </div>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                    <a href="KOFFIISRAEL_AMANI_CV.pdf" class="btn btn-p" download>⬇ Télécharger PDF</a>
+                    <button class="btn btn-o" onclick="openModal('mCV')">👁 Aperçu</button>
+                </div>
+            </div>
+        </section>
+        
+        <section id="booking">
+            <div class="section-header fade-up">
+                <div class="s-num">// 06</div>
+                <div class="s-line"></div>
+                <h2 class="s-title">Prendre un <span>Rendez-vous</span></h2>
+                <p class="s-sub">Planifiez un entretien ou un échange · <span
+                        style="font-family:'JetBrains Mono',monospace;color:var(--text3);font-size:0.8em;">POST
+                        /api/appointments</span></p>
+            </div>
+            <div class="book-grid fade-up">
+                <div class="cal-card">
+                    <div class="cal-head">
+                        <div class="cal-month" id="calLabel"></div>
+                        <div class="cal-nav-row">
+                            <button class="cal-nb" onclick="prevM()">‹</button>
+                            <button class="cal-nb" onclick="nextM()">›</button>
+                        </div>
+                    </div>
+                    <div class="cal-dow" id="calDow"></div>
+                    <div class="cal-grid" id="calGrid"></div>
+                    <div class="time-slots-wrap" id="timeWrap" style="display:none;">
+                        <div class="ts-label" id="timeDateLabel">CRÉNEAUX DISPONIBLES</div>
+                        <div class="time-grid" id="timeGrid"></div>
+                    </div>
+                </div>
+                <div class="book-form">
+                    <h3
+                        style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:1.5rem;">
+                        // Informations</h3>
+                    <div id="bookSuccess" class="succ-msg">✅ Demande envoyée. Confirmation sous 24h.</div>
+                    <div id="bookFormWrap">
+                        <div class="form-g"><label class="form-label">NOM COMPLET *</label><input type="text" class="form-input"
+                                id="bkName" placeholder="Koffi Dupont"></div>
+                        <div class="form-g"><label class="form-label">EMAIL *</label><input type="email" class="form-input"
+                                id="bkEmail" placeholder="email@domaine.com"></div>
+                        <div class="form-g">
+                            <label class="form-label">OBJET</label>
+                            <select class="form-select" id="bkReason">
+                                <option value="">Sélectionner...</option>
+                                <option value="interview">Entretien d'embauche</option>
+                                <option value="stage">Proposition de stage</option>
+                                <option value="collab">Collaboration projet</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-g"><label class="form-label">MESSAGE</label><textarea class="form-ta" id="bkMsg"
+                                placeholder="..."></textarea></div>
+                        <div class="sel-preview" id="selPreview">Aucune date/heure sélectionnée</div>
+                        <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="submitBooking()">📅
+                            Confirmer le rendez-vous</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="alt-bg">
+            <div class="section-header fade-up">
+                <div class="s-num">// 07</div>
+                <div class="s-line"></div>
+                <h2 class="s-title">Me <span>Contacter</span></h2>
+                <p class="s-sub">Disponible pour opportunités IT · Stage · Emploi junior · Collaboration</p>
+            </div>
+            <div class="contact-grid fade-up">
+                <div class="contact-info">
+                    <div class="c-item">
+                        <div class="c-ico">✉️</div>
+                        <div>
+                            <div class="c-lab">EMAIL</div>
+                            <div class="c-val">amanikoffiisrael26@gmail.com</div>
+                        </div>
+                    </div>
+                    <div class="c-item">
+                        <div class="c-ico">📱</div>
+                        <div>
+                            <div class="c-lab">WHATSAPP / MOBILE</div>
+                            <div class="c-val">+225 07 10 28 46 54</div>
+                        </div>
+                    </div>
+                    <div class="c-item">
+                        <div class="c-ico">💼</div>
+                        <div>
+                            <div class="c-lab">LINKEDIN</div>
+                            <div class="c-val">www.linkedin.com/in/koffi-israel-amani-711568273</div>
+                        </div>
+                    </div>
+                    <div class="c-item">
+                        <div class="c-ico">🐙</div>
+                        <div>
+                            <div class="c-lab">GITHUB</div>
+                            <div class="c-val">github.com/israel-amani</div>
+                        </div>
+                    </div>
+                    <div class="c-item">
+                        <div class="c-ico">📍</div>
+                        <div>
+                            <div class="c-lab">LOCALISATION</div>
+                            <div class="c-val">Portbouët-Gonzagueville, Abidjan</div>
+                        </div>
+                    </div>
+                    <div class="socials">
+                        <a class="soc-b" href="mailto:amanikoffiisrael26@gmail.com">✉️</a>
+                        <a class="soc-b" href="tel:+2250710284654">📱</a>
+                        <a class="soc-b" href="#" title="LinkedIn">💼</a>
+                        <a class="soc-b" href="#" title="GitHub">🐙</a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3
+                        style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:1.5rem;">
+                        // Envoyer un message</h3>
+                    <div id="contactSuccess" class="succ-msg">✅ Message envoyé ! Réponse sous 48h.</div>
+                    <div id="contactFormWrap">
+                        <div class="form-g"><label class="form-label">NOM COMPLET *</label><input type="text" class="form-input"
+                                id="cName" placeholder="Votre nom"></div>
+                        <div class="form-g"><label class="form-label">EMAIL *</label><input type="email" class="form-input"
+                                id="cEmail" placeholder="email@domaine.com"></div>
+                        <div class="form-g"><label class="form-label">SUJET</label><input type="text" class="form-input"
+                                id="cSubject" placeholder="Opportunité de stage..."></div>
+                        <div class="form-g"><label class="form-label">MESSAGE *</label><textarea class="form-ta" id="cMsg"
+                                style="min-height:110px;" placeholder="..."></textarea></div>
+                        <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="submitContact()">✉
+                            Envoyer</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">&gt; KOFFI_ISRAEL.sh</div>
+                    <p class="footer-tag">Technicien IT & Réseaux CCNA · Développeur Web · Basé à Abidjan · Disponible
+                        immédiatement.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <a href="#about">À propos</a><a href="#skills">Compétences</a><a href="#projects">Projets</a><a
+                        href="#experience">Expérience</a><a href="#contact">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Liens</h4>
+                    <a href="#cv">Télécharger CV</a><a href="#booking">Rendez-vous</a><a href="#">LinkedIn</a><a
+                        href="#">GitHub</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 <span>Koffi Israel Amani</span> — Tous droits réservés</p>
+                <p>Fait avec ❤ en <span>Côte d'Ivoire</span> 🇨🇮</p>
+            </div>
+        </footer>
+        
+        <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+        
+        HTMLEOF
+
+        <!-- MODALS -->
+        <div class="modal-overlay" id="m1">
+            <div class="modal"><button class="modal-x" onclick="closeModal('m1')">✕</button>
+                <div style="font-size:2.5rem;margin-bottom:1rem;">🏢</div>
+                <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:0.5rem;">Réseau Multi-Sites d'Entreprise</h3>
+                <div class="modal-tech"><span class="ptag pt-n">Cisco Packet Tracer</span><span
+                        class="ptag pt-n">OSPF</span><span class="ptag pt-n">VLAN</span><span class="ptag pt-n">GRE</span></div>
+                <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1rem;">Conception et simulation d'un réseau complet
+                    pour une entreprise multi-sites (siège + 2 agences). Architecture LAN/WAN, segmentation VLAN, routage
+                    dynamique OSPF et services réseau centralisés.</p>
+                <h4
+                    style="font-weight:700;font-size:0.78rem;font-family:'JetBrains Mono',monospace;color:var(--text3);margin-bottom:0.75rem;letter-spacing:1px;">
+                    // OBJECTIFS</h4>
+                <ul class="modal-li">
+                    <li>Interconnexion 3 sites via WAN simulé</li>
+                    <li>5 VLANs : Admin, RH, Technique, Invité, Serveurs</li>
+                    <li>Routage dynamique OSPF multi-zones</li>
+                    <li>Serveurs DNS, DHCP, FTP centralisés</li>
+                    <li>Validation de la communication inter-sites</li>
+                </ul>
+                <div style="display:flex;gap:1rem;margin-top:1.5rem;"><button class="btn btn-p"
+                        onclick="closeModal('m1')">Fermer</button></div>
+            </div>
+        </div>
+        <div class="modal-overlay" id="m2">
+            <div class="modal"><button class="modal-x" onclick="closeModal('m2')">✕</button>
+                <div style="font-size:2.5rem;margin-bottom:1rem;">🔀</div>
+                <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:0.5rem;">Segmentation VLAN & Inter-VLAN</h3>
+                <div class="modal-tech"><span class="ptag pt-n">802.1Q</span><span class="ptag pt-n">STP</span><span
+                        class="ptag pt-n">ACL</span><span class="ptag pt-n">Switch L3</span></div>
+                <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1rem;">Configuration d'un réseau d'entreprise
+                    segmenté en VLANs par département, avec routage inter-VLAN via router-on-a-stick et Switch Layer 3.
+                    Politiques de sécurité par ACL.</p>
+                <div style="display:flex;gap:1rem;margin-top:1.5rem;"><button class="btn btn-p"
+                        onclick="closeModal('m2')">Fermer</button></div>
+            </div>
+        </div>
+        <div class="modal-overlay" id="m3">
+            <div class="modal"><button class="modal-x" onclick="closeModal('m3')">✕</button>
+                <div style="font-size:2.5rem;margin-bottom:1rem;">🚇</div>
+                <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:0.5rem;">Tunnel GRE Inter-Sites</h3>
+                <div class="modal-tech"><span class="ptag pt-n">GRE</span><span class="ptag pt-n">IPSec</span><span
+                        class="ptag pt-n">OSPF over GRE</span></div>
+                <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1rem;">Création d'un tunnel GRE pour relier deux
+                    sites distants avec propagation des routes OSPF à travers le tunnel. Démonstration de la maîtrise des VPN
+                    site-à-site.</p>
+                <div style="display:flex;gap:1rem;margin-top:1.5rem;"><button class="btn btn-p"
+                        onclick="closeModal('m3')">Fermer</button></div>
+            </div>
+        </div>
+        <div class="modal-overlay" id="m4">
+            <div class="modal"><button class="modal-x" onclick="closeModal('m4')">✕</button>
+                <div style="font-size:2.5rem;margin-bottom:1rem;">🖥️</div>
+                <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:0.5rem;">Infrastructure DNS / FTP / Mail</h3>
+                <div class="modal-tech"><span class="ptag pt-n">DNS</span><span class="ptag pt-n">FTP</span><span
+                        class="ptag pt-n">SMTP</span><span class="ptag pt-n">DHCP</span></div>
+                <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1rem;">Déploiement d'une infrastructure de services
+                    réseau complète : serveur DNS autoritaire, FTP pour partage de fichiers, et messagerie SMTP/POP3 dans un
+                    réseau Packet Tracer.</p>
+                <div style="display:flex;gap:1rem;margin-top:1.5rem;"><button class="btn btn-p"
+                        onclick="closeModal('m4')">Fermer</button></div>
+            </div>
+        </div>
+        <div class="modal-overlay" id="m5">
+            <div class="modal"><button class="modal-x" onclick="closeModal('m5')">✕</button>
+                <div style="font-size:2.5rem;margin-bottom:1rem;">📋</div>
+                <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:0.5rem;">Application Gestion des Congés</h3>
+                <div class="modal-tech"><span class="ptag pt-w">Laravel</span><span class="ptag pt-w">PHP 8</span><span
+                        class="ptag pt-w">MySQL</span><span class="ptag pt-w">Python</span></div>
+                <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1rem;">Application web MVC développée avec Laravel
+                    pour la gestion des congés, tickets IT et demandes d'intervention au sein du Ministère du Tourisme.
+                    Authentification, dashboard et génération de rapports.</p>
+                <div style="display:flex;gap:1rem;margin-top:1.5rem;"><button class="btn btn-p"
+                        onclick="closeModal('m5')">Fermer</button></div>
+            </div>
+        </div>
+        <div class="modal-overlay" id="m6">
+            <div class="modal"><button class="modal-x" onclick="closeModal('m6')">✕</button>
+                <div style="font-size:2.5rem;margin-bottom:1rem;">📦</div>
+                <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:0.5rem;">Inventaire Parc Informatique</h3>
+                <div class="modal-tech"><span class="ptag pt-i">Stage</span><span class="ptag pt-i">PHP</span><span
+                        class="ptag pt-i">MySQL</span></div>
+                <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1rem;">Système d'inventaire pour le parc
+                    informatique du Ministère du Tourisme. Suivi en temps réel de 50+ postes, gestion des maintenances et
+                    génération de rapports mensuels.</p>
+                <div style="display:flex;gap:1rem;margin-top:1.5rem;"><button class="btn btn-p"
+                        onclick="closeModal('m6')">Fermer</button></div>
+            </div>
+        </div>
+        <div class="modal-overlay" id="mCV">
+            <div class="modal" style="max-width:780px;"><button class="modal-x" onclick="closeModal('mCV')">✕</button>
+                <h3
+                    style="font-family:'JetBrains Mono',monospace;font-size:0.76rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:1.5rem;">
+                    // APERÇU CV</h3>
+                <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:2rem;">
+                    <div
+                        style="display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;border-bottom:2px solid var(--accent);padding-bottom:1.25rem;margin-bottom:1.25rem;">
+                        <div>
+                            <h2 style="font-size:1.7rem;font-weight:900;letter-spacing:-1px;margin-bottom:4px;">KOFFI ISRAEL
+                                AMANI</h2>
+                            <p
+                                style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--accent);letter-spacing:1px;">
+                                TECHNICIEN SUPPORT IT & RÉSEAUX (COMPÉTENCES CCNA)</p>
+                            <p
+                                style="font-size:0.75rem;color:var(--text3);margin-top:8px;font-family:'JetBrains Mono',monospace;">
+                                amanikoffiisrael26@gmail.com · +225 07 10 28 46 54</p>
+                        </div><img id="cvPhotoPreview"
+                            style="width:80px;height:80px;border-radius:8px;object-fit:cover;object-position:top;border:1px solid var(--border2);"
+                            alt="Photo">
+                    </div>
+                    <div style="font-size:0.8rem;color:var(--text2);margin-bottom:1rem;"><strong
+                            style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:var(--accent);letter-spacing:1px;">//
+                            PROFIL</strong><br><br>Technicien informatique avec une solide base en réseaux (niveau CCNA),
+                        capable de configurer, maintenir et dépanner des infrastructures LAN. Expérimenté en support
+                        utilisateurs, VLAN, routage inter-VLAN et protocoles OSPF, EIGRP, RIP.</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;font-size:0.76rem;color:var(--text2);">
+                        <div><strong
+                                style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--accent3);letter-spacing:1px;">//
+                                COMPÉTENCES</strong><br><br>• Réseaux LAN/WAN, VLAN, OSPF, GRE<br>• Support IT niveau 1,
+                            maintenance PC<br>• PHP, Laravel, MySQL, HTML/CSS/JS<br>• Cisco Packet Tracer, Wireshark</div>
+                        <div><strong
+                                style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--accent3);letter-spacing:1px;">//
+                                FORMATION</strong><br><br>• CCNA — SKILLGATE-GROUP (en cours)<br>• BTS Informatique — ISCAT
+                            (2021-2023)<br><br><strong
+                                style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--accent3);letter-spacing:1px;">//
+                                INFOS</strong><br><br>📍 Abidjan · 23 ans · Ivoirien</div>
+                    </div>
+                </div>
+                <div style="margin-top:1.5rem;display:flex;gap:1rem;"><a href="KOFFIISRAEL_AMANI_CV.pdf" class="btn btn-p"
+                        download>⬇ Télécharger le vrai CV PDF</a><button class="btn btn-o"
+                        onclick="closeModal('mCV')">Fermer</button></div>
+            </div>
+        </div>
+        
+        <!-- TERMINAL — Kali Linux Style -->
+        <div class="term-overlay" id="terminalOverlay">
+            <div class="term-box">
+                <div class="term-header">
+                    <div class="tdots">
+                        <div class="tdot td-r"></div>
+                        <div class="tdot td-y"></div>
+                        <div class="tdot td-g"></div>
+                    </div>
+                    <div class="term-title-bar">israel@kali:~$ — PORTFOLIO TERMINAL v2.0</div>
+                    <button class="term-x" onclick="closeTerminal()">✕</button>
+                </div>
+                <div class="term-body" id="termBody"></div>
+                <div class="term-input-row">
+                    <span class="term-prompt-label"><span class="t-prompt">┌──(</span><span
+                            style="color:#ff77ff;">israel</span><span class="t-prompt">㉿</span><span
+                            style="color:var(--term-blue);">portfolio</span><span class="t-prompt">)-[</span><span
+                            style="color:var(--text2);">~</span><span class="t-prompt">]</span></span>
+                    <input type="text" class="term-input" id="termInput" autocomplete="off"
+                        placeholder="Type 'help' to start...">
+                </div>
+            </div>
+        </div>
+        
+        <!-- ADMIN PANEL -->
+        <div class="admin-overlay" id="adminOverlay">
+            <div class="admin-box">
+                <div class="admin-head">
+                    <span class="admin-title">⚙ DASHBOARD ADMIN — PORTFOLIO MANAGER</span>
+                    <button class="admin-close" onclick="closeAdmin()">✕ FERMER</button>
+                </div>
+                <div class="admin-tabs">
+                    <div class="admin-tab active" onclick="switchTab('appts',this)">📅 Rendez-vous</div>
+                    <div class="admin-tab" onclick="switchTab('msgs',this)">📬 Messages</div>
+                    <div class="admin-tab" onclick="switchTab('labs',this)">🧪 Labs</div>
+                    <div class="admin-tab" onclick="switchTab('addlab',this)">➕ Ajouter Lab</div>
+                </div>
+                <div class="admin-content">
+                    <div class="admin-panel active" id="panel-appts">
+                        <p
+                            style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:var(--text3);margin-bottom:1rem;letter-spacing:1px;">
+                            // GET /api/appointments</p>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>NOM</th>
+                                    <th>EMAIL</th>
+                                    <th>DATE</th>
+                                    <th>HEURE</th>
+                                    <th>OBJET</th>
+                                    <th>STATUT</th>
+                                </tr>
+                            </thead>
+                            <tbody id="apptTbody"></tbody>
+                        </table>
+                    </div>
+                    <div class="admin-panel" id="panel-msgs">
+                        <p
+                            style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:var(--text3);margin-bottom:1rem;letter-spacing:1px;">
+                            // GET /api/messages</p>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>NOM</th>
+                                    <th>EMAIL</th>
+                                    <th>SUJET</th>
+                                    <th>DATE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="msgsTbody"></tbody>
+                        </table>
+                    </div>
+                    <div class="admin-panel" id="panel-labs">
+                        <p
+                            style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:var(--text3);margin-bottom:1rem;letter-spacing:1px;">
+                            // GET /api/labs</p>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>TITRE</th>
+                                    <th>CATÉGORIE</th>
+                                    <th>TECHNOLOGIES</th>
+                                    <th>DATE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="labsTbody"></tbody>
+                        </table>
+                    </div>
+                    <div class="admin-panel" id="panel-addlab">
+                        <p
+                            style="font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:var(--text3);margin-bottom:1.5rem;letter-spacing:1px;">
+                            // POST /api/labs</p>
+                        <div class="addlab-form">
+                            <div class="form-g"><label class="form-label">TITRE *</label><input type="text" class="form-input"
+                                    id="nlTitle" placeholder="Nom du projet"></div>
+                            <div class="form-g"><label class="form-label">CATÉGORIE</label><select class="form-select"
+                                    id="nlCat">
+                                    <option value="network">Réseau</option>
+                                    <option value="web">Web</option>
+                                    <option value="it">Support IT</option>
+                                </select></div>
+                            <div class="form-g full"><label class="form-label">DESCRIPTION *</label><textarea class="form-ta"
+                                    id="nlDesc" placeholder="Description..."></textarea></div>
+                            <div class="form-g"><label class="form-label">TECHNOLOGIES</label><input type="text"
+                                    class="form-input" id="nlTech" placeholder="OSPF, VLAN, Laravel..."></div>
+                            <div class="form-g"><label class="form-label">DATE</label><input type="date" class="form-input"
+                                    id="nlDate"></div>
+                            <div class="form-g full"><button class="btn btn-p" style="width:100%;justify-content:center;"
+                                    onclick="addLab()">➕ Ajouter le projet</button></div>
+                        </div>
+                        <div id="addLabOk" class="succ-msg" style="margin-top:1rem;">✅ Projet ajouté !</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            /* ===== SIMULATED API DATA ===== */
+            const API = {
+                skills: [
+                    { cat: 'network', items: [{ n: 'VLAN/Trunk/STP', v: 85 }, { n: 'OSPF/RIP/Static', v: 80 }, { n: 'DNS/DHCP/FTP', v: 78 }, { n: 'GRE/VPN', v: 70 }, { n: 'Cisco IOS CLI', v: 82 }] },
+                    { cat: 'web', items: [{ n: 'HTML/CSS', v: 88 }, { n: 'JavaScript', v: 75 }, { n: 'PHP/Laravel', v: 80 }, { n: 'MySQL', v: 76 }, { n: 'Bootstrap/Tailwind', v: 72 }] },
+                    { cat: 'it', items: [{ n: 'Windows Server', v: 75 }, { n: 'Maintenance PC', v: 85 }, { n: 'Active Directory', v: 65 }, { n: 'Linux Ubuntu', v: 68 }, { n: 'Assistance users', v: 90 }] },
+                    { cat: 'tools', items: [{ n: 'Cisco Packet Tracer', v: 88 }, { n: 'VS Code/Git', v: 80 }, { n: 'Wireshark', v: 70 }, { n: 'VMware/VirtualBox', v: 72 }] }
+                ],
+                projects: [
+                    { id: 1, title: 'Réseau Multi-Sites', cat: 'network', tech: 'OSPF, VLAN, GRE', date: '2024-12-01' },
+                    { id: 2, title: 'App Gestion Congés', cat: 'web', tech: 'Laravel, PHP, MySQL', date: '2025-03-01' },
+                    { id: 3, title: 'Inventaire IT', cat: 'it', tech: 'PHP, MySQL, Windows', date: '2025-04-01' },
+                    { id: 4, title: 'VLAN Segmentation', cat: 'network', tech: '802.1Q, STP, ACL', date: '2024-10-01' },
+                    { id: 5, title: 'Tunnel GRE', cat: 'network', tech: 'GRE, IPSec, OSPF', date: '2024-11-01' },
+                ],
+                appointments: [
+                    { name: 'Marie Koné', email: 'marie@rh.ci', date: '2025-05-15', time: '09:00', reason: 'interview', status: 'confirm' },
+                    { name: 'Jean-Paul Assi', email: 'jp.assi@tech.ci', date: '2025-05-20', time: '11:00', reason: 'stage', status: 'pending' },
+                ],
+                messages: [
+                    { name: 'DRH Orange CI', email: 'drh@orange.ci', subject: 'Poste Technicien Réseaux', date: '27/04/2025' },
+                    { name: 'MTN Recruitment', email: 'jobs@mtn.ci', subject: 'Stage IT', date: '26/04/2025' },
+                ],
+                about: { name: 'Koffi Israel Amani', role: 'Technicien IT & Réseaux (CCNA)', location: 'Abidjan, Côte d\'Ivoire', email: 'amanikoffiisrael26@gmail.com', phone: '+225 07 10 28 46 54', available: true }
+            };
+            /* Simulate API fetch */
+            function apiFetch(endpoint) { return new Promise(r => setTimeout(() => r(API[endpoint] || null), 180)); }
+
+            /* ===== THEME ===== */
+            let theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙';
+            function toggleTheme() { theme = theme === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', theme); localStorage.setItem('theme', theme); document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙'; }
+
+            /* ===== LANG ===== */
+            const LANG = {
+                fr: { 'hero-badge-txt': 'Disponible — Stage / Emploi · Abidjan & Remote', 'hero-desc-txt': 'Technicien IT & Réseaux avec compétences CCNA. Spécialisé en infrastructures LAN, support utilisateurs et simulation réseau avancée sous Cisco Packet Tracer.', 'btn1-txt': 'Voir le portfolio', 'btn2-txt': 'Télécharger CV', 'btn3-txt': 'Me contacter', 'stat1': 'En cours', 'stat2': 'Mois de stage', 'stat3': 'Projets', 'stat4': 'Informatique' },
+                en: { 'hero-badge-txt': 'Available — Internship / Job · Abidjan & Remote', 'hero-desc-txt': 'IT & Network Technician with CCNA skills. Specialized in LAN infrastructure, user support and advanced network simulation with Cisco Packet Tracer.', 'btn1-txt': 'View Portfolio', 'btn2-txt': 'Download Resume', 'btn3-txt': 'Contact Me', 'stat1': 'In Progress', 'stat2': 'Mo. Internship', 'stat3': 'Projects', 'stat4': 'IT Degree' }
+            };
+            let currentLang = 'fr';
+            function setLang(l) { currentLang = l; Object.entries(LANG[l]).forEach(([k, v]) => { const el = document.getElementById(k); if (el) el.textContent = v; }); document.getElementById('langFr').classList.toggle('on', l === 'fr'); document.getElementById('langEn').classList.toggle('on', l === 'en'); }
+
+            /* ===== TYPED EFFECT ===== */
+            const phrases = ['Technicien IT & Réseaux', 'Préparation CCNA', 'Développeur PHP/Laravel', 'Support Utilisateurs', 'Network Engineer'];
+            let pIdx = 0, cIdx = 0, del = false;
+            function typeLoop() { const el = document.getElementById('typedText'); if (!el) return; const p = phrases[pIdx]; if (!del) { el.textContent = p.slice(0, ++cIdx); if (cIdx === p.length) { del = true; setTimeout(typeLoop, 1900); return; } } else { el.textContent = p.slice(0, --cIdx); if (cIdx === 0) { del = false; pIdx = (pIdx + 1) % phrases.length; } } setTimeout(typeLoop, del ? 44 : 78); }
+            typeLoop();
+
+            /* ===== SCROLL ===== */
+            window.addEventListener('scroll', () => { const s = window.scrollY, t = document.documentElement.scrollHeight - window.innerHeight; document.getElementById('scrollBar').style.width = (s / t * 100) + '%'; document.getElementById('backTop').classList.toggle('vis', s > 400);['about', 'skills', 'projects', 'experience', 'cv', 'booking', 'contact'].forEach(id => { const el = document.getElementById(id); if (!el) return; const r = el.getBoundingClientRect(), l = document.querySelector('.nav-links a[href="#' + id + '"]'); if (l) l.classList.toggle('active', r.top <= 100 && r.bottom > 100); }); });
+
+            /* ===== INTERSECTION OBSERVER ===== */
+            const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); e.target.querySelectorAll('.bar-fill').forEach(b => { b.style.width = b.dataset.w + '%'; }); } }); }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+            /* ===== PROJECT FILTER ===== */
+            document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); const f = btn.dataset.filter; document.querySelectorAll('.proj-card').forEach(c => { c.classList.toggle('hidden', f !== 'all' && c.dataset.category !== f); }); }); });
+
+            /* ===== MOBILE MENU ===== */
+            function toggleMenu() { document.getElementById('mobNav').classList.toggle('open'); }
+            function closeMenu() { document.getElementById('mobNav').classList.remove('open'); }
+
+            /* ===== MODALS ===== */
+            function openModal(id) {
+                document.getElementById(id).classList.add('open');
+                document.body.style.overflow = 'hidden';
+                // Set photo in CV modal
+                if (id === 'mCV') {
+                    const img = document.getElementById('cvPhotoPreview');
+                    const heroImg = document.querySelector('.photo-frame img');
+                    if (img && heroImg) { img.src = heroImg.src; }
+                }
+            }
+            function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
+            document.querySelectorAll('.modal-overlay').forEach(o => { o.addEventListener('click', e => { if (e.target === o) { o.classList.remove('open'); document.body.style.overflow = ''; } }); });
+
+            /* ===== CALENDAR ===== */
+            let calY = new Date().getFullYear(), calM = new Date().getMonth(), selDate = null, selTime = null;
+            const mnFr = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+            const dowFr = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+            function renderCal() {
+                const today = new Date();
+                document.getElementById('calLabel').textContent = mnFr[calM] + ' ' + calY;
+                document.getElementById('calDow').innerHTML = dowFr.map(d => '<div>' + d + '</div>').join('');
+                const grid = document.getElementById('calGrid'); grid.innerHTML = '';
+                const firstDay = (new Date(calY, calM, 1).getDay() + 6) % 7;
+                const days = new Date(calY, calM + 1, 0).getDate();
+                for (let i = 0; i < firstDay; i++) { const e = document.createElement('div'); e.className = 'c-day emp'; grid.appendChild(e); }
+                for (let d = 1; d <= days; d++) {
+                    const el = document.createElement('div'); el.className = 'c-day'; el.textContent = d;
+                    const dt = new Date(calY, calM, d), td = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                    if (dt < td) { el.classList.add('past'); }
+                    else {
+                        if (d === today.getDate() && calM === today.getMonth() && calY === today.getFullYear()) el.classList.add('today');
+                        el.addEventListener('click', () => pickDay(d, el));
+                    }
+                    if (selDate && selDate.d === d && selDate.m === calM && selDate.y === calY) el.classList.add('sel');
+                    grid.appendChild(el);
+                }
+            }
+            function pickDay(d, el) { document.querySelectorAll('.c-day').forEach(x => x.classList.remove('sel')); el.classList.add('sel'); selDate = { d, m: calM, y: calY }; selTime = null; showTimes(); }
+            function showTimes() {
+                const times = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'], busy = ['10:00', '14:00'];
+                const wrap = document.getElementById('timeWrap'), grid = document.getElementById('timeGrid');
+                document.getElementById('timeDateLabel').textContent = selDate.d + ' ' + mnFr[selDate.m] + ' ' + selDate.y;
+                grid.innerHTML = '';
+                times.forEach(t => { const s = document.createElement('div'); s.className = 't-slot'; s.textContent = t; if (busy.includes(t)) { s.classList.add('unav'); } else { s.addEventListener('click', () => { document.querySelectorAll('.t-slot').forEach(x => x.classList.remove('sel')); s.classList.add('sel'); selTime = t; updateSel(); }); } grid.appendChild(s); });
+                wrap.style.display = 'block';
+            }
+            function updateSel() { const el = document.getElementById('selPreview'); if (selDate && selTime) { el.textContent = '📅 ' + selDate.d + ' ' + mnFr[selDate.m] + ' ' + selDate.y + ' — ' + selTime; el.classList.add('has'); } }
+            function prevM() { calM--; if (calM < 0) { calM = 11; calY--; } renderCal(); }
+            function nextM() { calM++; if (calM > 11) { calM = 0; calY++; } renderCal(); }
+            renderCal();
+
+            /* ===== FORMS ===== */
+            function submitBooking() {
+                const name = document.getElementById('bkName').value.trim(), email = document.getElementById('bkEmail').value.trim();
+                if (!name || !email) { alert('Veuillez remplir nom et email.'); return; }
+                if (!selDate || !selTime) { alert('Veuillez sélectionner une date et une heure.'); return; }
+                const data = { name, email, date: selDate.y + '-' + String(selDate.m + 1).padStart(2, '0') + '-' + String(selDate.d).padStart(2, '0'), time: selTime, reason: document.getElementById('bkReason').value, status: 'pending' };
+                console.log('[POST /api/appointments]', data);
+                API.appointments.push(data);
+                document.getElementById('bookFormWrap').style.display = 'none';
+                document.getElementById('bookSuccess').style.display = 'block';
+            }
+            function submitContact() {
+                const name = document.getElementById('cName').value.trim(), email = document.getElementById('cEmail').value.trim(), msg = document.getElementById('cMsg').value.trim();
+                if (!name || !email || !msg) { alert('Veuillez remplir tous les champs obligatoires.'); return; }
+                const data = { name, email, subject: document.getElementById('cSubject').value, message: msg, date: new Date().toLocaleDateString('fr-FR') };
+                console.log('[POST /api/messages]', data);
+                API.messages.push(data);
+                document.getElementById('contactFormWrap').style.display = 'none';
+                document.getElementById('contactSuccess').style.display = 'block';
+            }
+
+            /* ===== ADMIN ===== */
+            function openAdmin() { document.getElementById('adminOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; renderAdmin(); }
+            function closeAdmin() { document.getElementById('adminOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+            function switchTab(tab, el) { document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active')); document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active')); el.classList.add('active'); document.getElementById('panel-' + tab).classList.add('active'); }
+            function renderAdmin() {
+                document.getElementById('apptTbody').innerHTML = API.appointments.map(a => '<tr><td>' + a.name + '</td><td>' + a.email + '</td><td>' + a.date + '</td><td>' + a.time + '</td><td>' + a.reason + '</td><td><span class="sbadge ' + (a.status === 'confirm' ? 'sb-c' : 'sb-p') + '">' + (a.status === 'confirm' ? '✅ Confirmé' : '⏳ En attente') + '</span></td></tr>').join('');
+                document.getElementById('msgsTbody').innerHTML = API.messages.map(m => '<tr><td>' + m.name + '</td><td>' + m.email + '</td><td>' + m.subject + '</td><td>' + m.date + '</td></tr>').join('');
+                document.getElementById('labsTbody').innerHTML = API.projects.map(l => '<tr><td>' + l.title + '</td><td><span class="ptag ' + (l.cat === 'network' ? 'pt-n' : l.cat === 'web' ? 'pt-w' : 'pt-i') + '">' + l.cat.toUpperCase() + '</span></td><td>' + l.tech + '</td><td>' + l.date + '</td></tr>').join('');
+            }
+            function addLab() {
+                const t = document.getElementById('nlTitle').value.trim(), d = document.getElementById('nlDesc').value.trim();
+                if (!t || !d) { alert('Titre et description obligatoires.'); return; }
+                const lab = { id: Date.now(), title: t, cat: document.getElementById('nlCat').value, tech: document.getElementById('nlTech').value, date: document.getElementById('nlDate').value || new Date().toISOString().slice(0, 10) };
+                API.projects.push(lab); console.log('[POST /api/labs]', lab);
+                document.getElementById('addLabOk').style.display = 'block'; setTimeout(() => { document.getElementById('addLabOk').style.display = 'none'; }, 3e3);
+                renderAdmin();['nlTitle', 'nlDesc', 'nlTech'].forEach(i => document.getElementById(i).value = '');
+            }
+
+            /* ===== TERMINAL — KALI LINUX STYLE ===== */
+            let termHistory = [], termHidx = -1;
+
+            const TERM_CMDS = {
+                help: {
+                    fn: async () => [
+                        { c: 'tc-blue', t: '╔══════════════════════════════════════════╗' },
+                        { c: 'tc-blue', t: '║   KOFFI_ISRAEL.SH  —  COMMANDS v2.0     ║' },
+                        { c: 'tc-blue', t: '╚══════════════════════════════════════════╝' },
+                        { c: '', t: '' },
+                        { c: 'tc-yellow', t: 'SYSTEM COMMANDS:' },
+                        { c: 'tc-green', t: '  help        →  Show this help menu' },
+                        { c: 'tc-green', t: '  clear       →  Clear terminal (cls)' },
+                        { c: 'tc-green', t: '  whoami      →  User identity' },
+                        { c: 'tc-green', t: '  uname       →  System information' },
+                        { c: 'tc-green', t: '  uptime      →  Portfolio uptime' },
+                        { c: '', t: '' },
+                        { c: 'tc-yellow', t: 'PORTFOLIO COMMANDS:' },
+                        { c: 'tc-green', t: '  about       →  Fetch profile from /api/about' },
+                        { c: 'tc-green', t: '  skills      →  Fetch skills from /api/skills' },
+                        { c: 'tc-green', t: '  labs        →  Fetch projects from /api/labs' },
+                        { c: 'tc-green', t: '  projects    →  List all projects' },
+                        { c: 'tc-green', t: '  cv          →  Download / preview CV' },
+                        { c: 'tc-green', t: '  contact     →  Show contact info' },
+                        { c: 'tc-green', t: '  book        →  Open booking section' },
+                        { c: 'tc-green', t: '  status      →  Check API status' },
+                        { c: '', t: '' },
+                        { c: 'tc-dim', t: '──────────────────────────────────────────' },
+                        { c: 'tc-dim', t: 'Tip: Use ↑↓ arrows for command history' },
+                    ]
+                },
+                whoami: {
+                    fn: async () => {
+                        await sleep(200);
+                        return [
+                            { c: 'tc-green', t: 'israel' },
+                            { c: '', t: '' },
+                            { c: 'tc-dim', t: 'uid=1337(israel) gid=1337(it-networks) groups=cisco,php,laravel,mysql,windows,linux,python' },
+                            { c: '', t: '' },
+                            { c: 'tc-yellow', t: 'Identity:  Koffi Israel Amani' },
+                            { c: 'tc-blue', t: 'Role:      Technicien IT & Réseaux' },
+                            { c: 'tc-green', t: 'Status:    ✅ Available — Abidjan & Remote' },
+                            { c: '', t: 'Age:       23 ans · Ivoirien' },
+                            { c: '', t: 'Goal:      Ingénieur Réseaux / Dev Full-Stack' },
+                        ];
+                    }
+                },
+                uname: {
+                    fn: async () => [
+                        { c: 'tc-blue', t: 'ISRAEL-PORTFOLIO  Linux  5.15.0-kali  x86_64  GNU/Linux' },
+                        { c: 'tc-dim', t: 'Kernel: Cisco IOS 15.x compatible | PHP 8.2 | Laravel 10 | MySQL 8.0' },
+                    ]
+                },
+                uptime: { fn: async () => { const d = new Date(); return [{ c: 'tc-green', t: ' ' + d.toTimeString().slice(0, 8) + ' up 6 months,  stage: completed,  load average: motivated, 1.0, 1.0' }]; } },
+                status: {
+                    fn: async () => {
+                        await sleep(300);
+                        return [
+                            { c: 'tc-yellow', t: 'Checking API endpoints...' },
+                            { c: 'tc-green', t: '  ✅  GET /api/about        200 OK  (12ms)' },
+                            { c: 'tc-green', t: '  ✅  GET /api/skills       200 OK  (18ms)' },
+                            { c: 'tc-green', t: '  ✅  GET /api/labs         200 OK  (22ms)' },
+                            { c: 'tc-green', t: '  ✅  GET /api/appointments 200 OK  (15ms)' },
+                            { c: 'tc-green', t: '  ✅  GET /api/messages     200 OK  (11ms)' },
+                            { c: 'tc-green', t: '  ✅  POST /api/book        200 OK  (ready)' },
+                            { c: '', t: '' },
+                            { c: 'tc-green', t: 'All systems operational 🟢' },
+                        ];
+                    }
+                },
+                about: {
+                    fn: async () => {
+                        appendTermLines([{ c: 'tc-dim', t: 'Fetching from /api/about...' }]);
+                        const data = await apiFetch('about'); await sleep(180);
+                        return [
+                            { c: 'tc-yellow', t: '┌─ PROFILE ──────────────────────────────┐' },
+                            { c: 'tc-blue', t: '│  ' + data.name },
+                            { c: '', t: '│  ' + data.role },
+                            { c: 'tc-yellow', t: '└────────────────────────────────────────┘' },
+                            { c: '', t: '' },
+                            { c: '', t: '  📍  ' + data.location },
+                            { c: '', t: '  📧  ' + data.email },
+                            { c: '', t: '  📱  ' + data.phone },
+                            { c: 'tc-green', t: '  ✅  ' + (data.available ? 'Disponible immédiatement' : 'En poste') },
+                        ];
+                    }
+                },
+                skills: {
+                    fn: async () => {
+                        appendTermLines([{ c: 'tc-dim', t: 'Fetching from /api/skills...' }]);
+                        const data = await apiFetch('skills'); await sleep(200);
+                        const lines = [{ c: 'tc-yellow', t: '┌─ TECHNICAL SKILLS ─────────────────────┐' }, { c: '', t: '' }];
+                        data.forEach(cat => {
+                            lines.push({ c: 'tc-blue', t: '  [' + cat.cat.toUpperCase() + ']' });
+                            cat.items.forEach(i => {
+                                const bar = '█'.repeat(Math.round(i.v / 10)) + '░'.repeat(10 - Math.round(i.v / 10));
+                                lines.push({ c: '', t: '  ' + i.n.padEnd(22) + bar + ' ' + i.v + '%' });
+                            });
+                            lines.push({ c: '', t: '' });
+                        });
+                        lines.push({ c: 'tc-yellow', t: '└────────────────────────────────────────┘' });
+                        return lines;
+                    }
+                },
+                labs: {
+                    fn: async () => {
+                        appendTermLines([{ c: 'tc-dim', t: 'Fetching from /api/labs...' }]);
+                        const data = await apiFetch('projects'); await sleep(200);
+                        const lines = [{ c: 'tc-yellow', t: '┌─ LABS & PROJECTS ──────────────────────┐' }, { c: '', t: '' }];
+                        data.forEach(p => {
+                            const c = p.cat === 'network' ? 'tc-blue' : p.cat === 'web' ? 'tc-magenta' : 'tc-green';
+                            lines.push({ c, t: '  [' + p.cat.toUpperCase().padEnd(7) + '] ' + p.title });
+                            lines.push({ c: 'tc-dim', t: '             Tech: ' + p.tech + ' | ' + p.date });
+                            lines.push({ c: '', t: '' });
+                        });
+                        lines.push({ c: 'tc-yellow', t: '└────────────────────────────────────────┘' });
+                        return lines;
+                    }
+                },
+                projects: { fn: async () => TERM_CMDS.labs.fn() },
+                cv: {
+                    fn: async () => [
+                        { c: 'tc-yellow', t: '┌─ CURRICULUM VITAE ─────────────────────┐' },
+                        { c: '', t: '  File:    KOFFIISRAEL_AMANI_CV.pdf' },
+                        { c: 'tc-green', t: '  Status:  ✅ Available for download' },
+                        { c: '', t: '  Updated: 2025  |  Pages: 1  |  Format: PDF' },
+                        { c: 'tc-yellow', t: '└────────────────────────────────────────┘' },
+                        { c: '', t: '' },
+                        { c: 'tc-blue', t: '  → Navigate to #cv section to download' },
+                    ]
+                },
+                contact: {
+                    fn: async () => {
+                        const d = await apiFetch('about');
+                        return [
+                            { c: 'tc-yellow', t: '┌─ CONTACT ──────────────────────────────┐' },
+                            { c: 'tc-green', t: '  📧  ' + d.email },
+                            { c: 'tc-green', t: '  📱  ' + d.phone + ' (WhatsApp)' },
+                            { c: 'tc-blue', t: '  💼  linkedin.com/in/koffi-israel-amani' },
+                            { c: 'tc-blue', t: '  🐙  github.com/israel-amani' },
+                            { c: '', t: '  📍  Portbouët-Gonzagueville, Abidjan' },
+                            { c: 'tc-yellow', t: '└────────────────────────────────────────┘' },
+                        ];
+                    }
+                },
+                book: {
+                    fn: async () => {
+                        document.getElementById('terminalOverlay').classList.remove('open');
+                        document.body.style.overflow = '';
+                        document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+                        return [{ c: 'tc-green', t: '→ Redirecting to booking section...' }];
+                    }
+                },
+                cls: { fn: async () => { document.getElementById('termBody').innerHTML = ''; return []; } },
+                clear: { fn: async () => { document.getElementById('termBody').innerHTML = ''; return [{ c: 'tc-dim', t: 'Terminal cleared. Type "help" for commands.' }]; } },
+            };
+
+            function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+            function openTerminal() {
+                document.getElementById('terminalOverlay').classList.add('open');
+                document.body.style.overflow = 'hidden';
+                const body = document.getElementById('termBody');
+                if (!body.children.length) { animateBoot(); }
+                setTimeout(() => document.getElementById('termInput').focus(), 120);
+            }
+            function closeTerminal() { document.getElementById('terminalOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+
+            async function animateBoot() {
+                const lines = [
+                    { c: 'tc-blue', t: '     ____  ______  ___    ____  _______   __ ' },
+                    { c: 'tc-blue', t: '    /  _/ / __/ _ \\/ _ |  / __/ / ___/ /  / /' },
+                    { c: 'tc-blue', t: '   _/ /  _\\ \\/ , _/ __ | / _/  / /__/ /__/ / ' },
+                    { c: 'tc-blue', t: '  /___/ /___/_/|_/_/ |_|/___/  \\___/____/_/  ' },
+                    { c: '', t: '' },
+                    { c: 'tc-dim', t: '  Kali Linux Rolling Release — Portfolio Edition' },
+                    { c: '', t: '' },
+                    { c: 'tc-yellow', t: '  [  ....  ] Initializing portfolio modules...' },
+                ];
+                for (const l of lines) { appendTermLines([l]); await sleep(60); }
+                await sleep(400);
+                appendTermLines([{ c: 'tc-green', t: '  [  OK  ] Loading skills database...' }]);
+                await sleep(250);
+                appendTermLines([{ c: 'tc-green', t: '  [  OK  ] Connecting to API endpoints...' }]);
+                await sleep(250);
+                appendTermLines([{ c: 'tc-green', t: '  [  OK  ] Starting terminal interface...' }]);
+                await sleep(350);
+                appendTermLines([{ c: '', t: '' }]);
+                const welcome = [
+                    { c: 'tc-green', t: '┌──────────────────────────────────────────────┐' },
+                    { c: 'tc-green', t: '│                                              │' },
+                    { c: 'tc-blue', t: '│   Welcome to ISRAEL Portfolio Terminal 🚀    │' },
+                    { c: 'tc-green', t: '│                                              │' },
+                    { c: 'tc-green', t: '│   Koffi Israel Amani — IT & Networks         │' },
+                    { c: '', t: '│   Abidjan, Côte d\'Ivoire                     │' },
+                    { c: 'tc-green', t: '│                                              │' },
+                    { c: 'tc-green', t: '└──────────────────────────────────────────────┘' },
+                    { c: '', t: '' },
+                    { c: 'tc-dim', t: '  Type "help" to see available commands.' },
+                    { c: '', t: '' },
+                ];
+                for (const l of welcome) { appendTermLines([l]); await sleep(30); }
+            }
+
+            function appendTermLines(lines) {
+                const body = document.getElementById('termBody');
+                lines.forEach(l => {
+                    const div = document.createElement('div'); div.className = 't-line';
+                    const span = document.createElement('span'); span.className = 't-out ' + (l.c || '');
+                    span.textContent = l.t; div.appendChild(span); body.appendChild(div);
+                });
+                body.scrollTop = body.scrollHeight;
+            }
+
+            document.getElementById('termInput').addEventListener('keydown', async function (e) {
+                if (e.key === 'ArrowUp') { e.preventDefault(); if (termHidx < termHistory.length - 1) { termHidx++; this.value = termHistory[termHistory.length - 1 - termHidx]; } return; }
+                if (e.key === 'ArrowDown') { e.preventDefault(); if (termHidx > 0) { termHidx--; this.value = termHistory[termHistory.length - 1 - termHidx]; } else { termHidx = -1; this.value = ''; } return; }
+                if (e.key !== 'Enter') return;
+                const raw = this.value.trim(); this.value = ''; if (!raw) return;
+                termHistory.push(raw); termHidx = -1;
+                // Echo prompt
+                const body = document.getElementById('termBody');
+                const promptDiv = document.createElement('div'); promptDiv.className = 't-line';
+                promptDiv.innerHTML = '<span class="t-prompt">┌──(</span><span style="color:#ff77ff;">israel</span><span class="t-prompt">㉿</span><span style="color:var(--term-blue);">portfolio</span><span class="t-prompt">)-[~]</span><br><span class="t-prompt">└─$</span> <span style="color:var(--text);">' + raw + '</span>';
+                body.appendChild(promptDiv); body.scrollTop = body.scrollHeight;
+                const cmd = TERM_CMDS[raw.toLowerCase()];
+                if (cmd) { const out = await cmd.fn(); if (out && out.length) appendTermLines(out); }
+                else { appendTermLines([{ c: 'tc-warn', t: 'bash: ' + raw + ': command not found' }, { c: 'tc-dim', t: 'Type "help" to see available commands.' }]); }
+            });
+
+            /* ===== INIT ===== */
+            window.addEventListener('load', () => {
+                setLang('fr');
+                document.querySelectorAll('.hero-text .fade-up').forEach((el, i) => { setTimeout(() => el.classList.add('vis'), 200 + i * 150); });
+                const pw = document.querySelector('.photo-wrap'); if (pw) setTimeout(() => pw.classList.add('vis'), 500);
+            });
+        </script>
+        </body>
+        
+        </html>
+        HTMLEOF
