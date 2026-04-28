@@ -2632,7 +2632,7 @@
                         <div class="form-g"><label class="form-label">MESSAGE</label><textarea class="form-ta" id="bkMsg"
                                 placeholder="..."></textarea></div>
                         <div class="sel-preview" id="selPreview">Aucune date/heure sélectionnée</div>
-                        <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="submitBooking()">📅
+                        <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="submitBooking()">
                             Confirmer le rendez-vous</button>
                     </div>
                 </div>
@@ -3105,7 +3105,7 @@
             renderCal();
 
             /* ===== FORMS ===== */
-            function submitBooking() {
+           /* function submitBooking() {
                 const name = document.getElementById('bkName').value.trim(), email = document.getElementById('bkEmail').value.trim();
                 if (!name || !email) { alert('Veuillez remplir nom et email.'); return; }
                 if (!selDate || !selTime) { alert('Veuillez sélectionner une date et une heure.'); return; }
@@ -3114,7 +3114,44 @@
                 API.appointments.push(data);
                 document.getElementById('bookFormWrap').style.display = 'none';
                 document.getElementById('bookSuccess').style.display = 'block';
-            }
+            } */
+
+              
+               function submitBooking() {
+
+                 let name = document.getElementById("bkName").value;
+                 let email = document.getElementById("bkEmail").value;
+                 let reason = document.getElementById("bkReason").value;
+                 let message = document.getElementById("bkMsg").value;
+
+                 let date = "Non définie";
+                 let time = "Non défini";
+
+    let templateParams = {
+        name: name,
+        email: email,
+        reason: reason,
+        message: message,
+        date: date,
+        time: time
+    };
+
+    emailjs.send("service_at0jyug", "template_2is34bl", templateParams)
+    .then(function(response) {
+
+        document.getElementById("bookSuccess").style.display = "block";
+        document.getElementById("bookFormWrap").style.display = "none";
+
+    }, function(error) {
+        alert("Erreur lors de l'envoi 😢");
+        console.log(error);
+    });
+        }
+
+
+         
+
+         
             function submitContact() {
                 const name = document.getElementById('cName').value.trim(), email = document.getElementById('cEmail').value.trim(), msg = document.getElementById('cMsg').value.trim();
                 if (!name || !email || !msg) { alert('Veuillez remplir tous les champs obligatoires.'); return; }
@@ -3380,6 +3417,13 @@
                 const pw = document.querySelector('.photo-wrap'); if (pw) setTimeout(() => pw.classList.add('vis'), 500);
             });
         </script>
+         <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+          <script>
+            (function(){
+           emailjs.init("H2r8Mk5d87rRWnf1g");
+            })();
+          </script>
         </body>
         
         </html>
